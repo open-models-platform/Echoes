@@ -21,14 +21,14 @@ Widget customIcon(
   required IconData icon,
   bool isEnable = false,
   double size = 18,
-  bool isTwitterIcon = true,
+  bool isEchoesIcon = true,
   bool isFontAwesomeSolid = false,
   Color? iconColor,
   double paddingIcon = 10,
 }) {
   iconColor = iconColor ?? Theme.of(context).textTheme.caption!.color;
   return Padding(
-    padding: EdgeInsets.only(bottom: isTwitterIcon ? paddingIcon : 0),
+    padding: EdgeInsets.only(bottom: isEchoesIcon ? paddingIcon : 0),
     child: Icon(
       icon,
       size: size,

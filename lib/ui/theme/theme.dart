@@ -7,7 +7,7 @@ part 'text_styles.dart';
 
 class AppTheme {
   static final ThemeData appTheme = ThemeData(
-      backgroundColor: TwitterColor.white,
+      backgroundColor: EchoesColor.white,
       brightness: Brightness.light,
       primaryColor: AppColor.primary,
       cardColor: Colors.white,
@@ -16,9 +16,9 @@ class AppTheme {
       bottomSheetTheme:
           const BottomSheetThemeData(backgroundColor: AppColor.white),
       appBarTheme: AppBarTheme(
-          backgroundColor: TwitterColor.white,
+          backgroundColor: EchoesColor.white,
           iconTheme: IconThemeData(
-            color: TwitterColor.dodgeBlue,
+            color: EchoesColor.dodgeBlue,
           ),
           elevation: 0,
           // ignore: deprecated_member_use
@@ -28,15 +28,15 @@ class AppTheme {
           )),
       tabBarTheme: TabBarTheme(
         labelStyle:
-            TextStyles.titleStyle.copyWith(color: TwitterColor.dodgeBlue),
+            TextStyles.titleStyle.copyWith(color: EchoesColor.dodgeBlue),
         unselectedLabelColor: AppColor.darkGrey,
         unselectedLabelStyle:
             TextStyles.titleStyle.copyWith(color: AppColor.darkGrey),
-        labelColor: TwitterColor.dodgeBlue,
+        labelColor: EchoesColor.dodgeBlue,
         labelPadding: const EdgeInsets.symmetric(vertical: 12),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: TwitterColor.dodgeBlue,
+        backgroundColor: EchoesColor.dodgeBlue,
       ),
       colorScheme: const ColorScheme(
           background: Colors.white,

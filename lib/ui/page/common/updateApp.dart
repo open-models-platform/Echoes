@@ -42,7 +42,7 @@ class _UpdateAppState extends State<UpdateApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TwitterColor.mystic,
+      backgroundColor: EchoesColor.mystic,
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 36),
         child: Column(

@@ -17,7 +17,7 @@ class FollowNotificationTile extends StatelessWidget {
     return Column(
       children: [
         Container(
-          color: TwitterColor.white,
+          color: EchoesColor.white,
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 26),
           child: Column(
             children: [
@@ -85,7 +85,7 @@ class _UserCard extends StatelessWidget {
                     user.isVerified!
                         ? customIcon(context,
                             icon: AppIcon.blueTick,
-                            isTwitterIcon: true,
+                            isEchoesIcon: true,
                             iconColor: AppColor.primary,
                             size: 13,
                             paddingIcon: 3)

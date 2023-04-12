@@ -58,7 +58,7 @@ class ReechooWidget extends StatelessWidget {
                   ? customIcon(
                       context,
                       icon: AppIcon.blueTick,
-                      isTwitterIcon: true,
+                      isEchoesIcon: true,
                       iconColor: AppColor.primary,
                       size: 13,
                       paddingIcon: 3,

@@ -81,7 +81,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: TwitterColor.mystic,
+      backgroundColor: EchoesColor.mystic,
       appBar: AppBar(
         title: customText(
           'Email Verification',

@@ -20,7 +20,7 @@ class TrendsPage extends StatelessWidget {
         return Container(
           height: height,
           decoration: BoxDecoration(
-            color: TwitterColor.white,
+            color: EchoesColor.white,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
@@ -43,7 +43,7 @@ class TrendsPage extends StatelessWidget {
             width: 40,
             height: 5,
             decoration: BoxDecoration(
-              color: TwitterColor.paleSky50,
+              color: EchoesColor.paleSky50,
               borderRadius: BorderRadius.circular(10),
             ),
           ),
@@ -72,7 +72,7 @@ class TrendsPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
       child: RadioListTile<SortUser>(
         value: sortBy,
-        activeColor: TwitterColor.dodgeBlue,
+        activeColor: EchoesColor.dodgeBlue,
         groupValue: state.sortBy,
         onChanged: (val) {
           context.read<SearchState>().updateUserSortPrefrence = val!;
@@ -87,7 +87,7 @@ class TrendsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TwitterColor.white,
+      backgroundColor: EchoesColor.white,
       appBar: CustomAppBar(
         isBackButton: true,
         title: customTitleText('Trends'),

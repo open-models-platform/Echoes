@@ -41,7 +41,7 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TwitterColor.mystic,
+      backgroundColor: EchoesColor.mystic,
       appBar: CustomAppBar(
         scaffoldKey: widget.scaffoldKey,
         title: customTitleText(

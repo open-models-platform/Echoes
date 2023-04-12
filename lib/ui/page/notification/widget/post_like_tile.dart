@@ -47,8 +47,8 @@ class PostLikeTile extends StatelessWidget {
             const SizedBox(width: 20),
             customIcon(context,
                 icon: AppIcon.heartFill,
-                iconColor: TwitterColor.ceriseRed,
-                isTwitterIcon: true,
+                iconColor: EchoesColor.ceriseRed,
+                isEchoesIcon: true,
                 size: 25),
             const SizedBox(width: 10),
             Row(children: avaterList),
@@ -106,7 +106,7 @@ class PostLikeTile extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          color: TwitterColor.white,
+          color: EchoesColor.white,
           child: ListTile(
             onTap: () {
               var state = Provider.of<FeedState>(context, listen: false);

@@ -83,7 +83,7 @@ class _SuggestedUsersState extends State<SuggestedUsers> {
                         labelStyle: TextStyles.onPrimaryTitleText,
                         color: state.selectedUsersCount < userToFollowCount
                             ? Colors.grey[350]
-                            : TwitterColor.dodgeBlue,
+                            : EchoesColor.dodgeBlue,
                         isLoading: isLoading,
                       ),
                     ),
@@ -157,7 +157,7 @@ class _SuggestedUsersState extends State<SuggestedUsers> {
                                               state.userlist!.length
                                           ? Icon(
                                               Icons.check_circle,
-                                              color: TwitterColor.dodgeBlue,
+                                              color: EchoesColor.dodgeBlue,
                                             )
                                           : Icon(
                                               Icons.add_circle_outline_outlined,
@@ -210,7 +210,7 @@ class _SuggestedUsersState extends State<SuggestedUsers> {
                                     icon: state.isSelected(user)
                                         ? Icon(
                                             Icons.check_circle,
-                                            color: TwitterColor.dodgeBlue,
+                                            color: EchoesColor.dodgeBlue,
                                           )
                                         : Icon(
                                             Icons.add_circle_outline_outlined),

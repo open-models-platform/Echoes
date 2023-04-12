@@ -1,6 +1,6 @@
 part of '../theme.dart';
 
-class TwitterColor {
+class EchoesColor {
   static Color bondiBlue = const Color.fromRGBO(0, 132, 180, 1.0);
   static Color cerulean = const Color.fromRGBO(0, 172, 237, 1.0);
   static Color spindle = const Color.fromRGBO(192, 222, 237, 1.0);

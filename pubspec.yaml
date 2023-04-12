@@ -102,7 +102,7 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: TwitterIcon
+    - family: EchoesIcon
       fonts:
         - asset: assets/fonts/icons.ttf
     - family: HelveticaNeue

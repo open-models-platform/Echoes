@@ -170,7 +170,7 @@ class _ProfilePageState extends State<ProfilePage>
                               isMyProfile
                                   ? Container(height: 40)
                                   : RippleButton(
-                                      splashColor: TwitterColor.dodgeBlue_50
+                                      splashColor: EchoesColor.dodgeBlue_50
                                           .withAlpha(100),
                                       borderRadius: const BorderRadius.all(
                                         Radius.circular(20),
@@ -212,7 +212,7 @@ class _ProfilePageState extends State<ProfilePage>
                               const SizedBox(width: 10),
                               RippleButton(
                                 splashColor:
-                                    TwitterColor.dodgeBlue_50.withAlpha(100),
+                                    EchoesColor.dodgeBlue_50.withAlpha(100),
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(60)),
                                 onPressed: () {
@@ -231,10 +231,10 @@ class _ProfilePageState extends State<ProfilePage>
                                   ),
                                   decoration: BoxDecoration(
                                     color: isMyProfile
-                                        ? TwitterColor.white
+                                        ? EchoesColor.white
                                         : isFollower()
-                                            ? TwitterColor.dodgeBlue
-                                            : TwitterColor.white,
+                                            ? EchoesColor.dodgeBlue
+                                            : EchoesColor.white,
                                     border: Border.all(
                                         color: isMyProfile
                                             ? Colors.black87.withAlpha(180)
@@ -255,7 +255,7 @@ class _ProfilePageState extends State<ProfilePage>
                                       color: isMyProfile
                                           ? Colors.black87.withAlpha(180)
                                           : isFollower()
-                                              ? TwitterColor.white
+                                              ? EchoesColor.white
                                               : Colors.blue,
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold,
@@ -283,7 +283,7 @@ class _ProfilePageState extends State<ProfilePage>
       child: customIcon(
         context,
         icon: AppIcon.fabEchoo,
-        isTwitterIcon: true,
+        isEchoesIcon: true,
         iconColor: Theme.of(context).colorScheme.onPrimary,
         size: 25,
       ),
@@ -346,7 +346,7 @@ class _ProfilePageState extends State<ProfilePage>
       child: Scaffold(
         key: scaffoldKey,
         floatingActionButton: !isMyProfile ? null : _floatingActionButton(),
-        backgroundColor: TwitterColor.mystic,
+        backgroundColor: EchoesColor.mystic,
         body: NestedScrollView(
           // controller: _scrollController,
           headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
@@ -369,7 +369,7 @@ class _ProfilePageState extends State<ProfilePage>
                 delegate: SliverChildListDelegate(
                   [
                     Container(
-                      color: TwitterColor.white,
+                      color: EchoesColor.white,
                       child: TabBar(
                         indicator: TabIndicator(),
                         controller: _tabController,
@@ -459,7 +459,7 @@ class _ProfilePageState extends State<ProfilePage>
                 padding: const EdgeInsets.symmetric(vertical: 0),
                 itemCount: list.length,
                 itemBuilder: (context, index) => Container(
-                  color: TwitterColor.white,
+                  color: EchoesColor.white,
                   child: Echoo(
                     model: list![index],
                     isDisplayOnProfile: true,
@@ -547,7 +547,7 @@ class UserNameRowWidget extends StatelessWidget {
               user.isVerified!
                   ? customIcon(context,
                       icon: AppIcon.blueTick,
-                      isTwitterIcon: true,
+                      isEchoesIcon: true,
                       iconColor: AppColor.primary,
                       size: 13,
                       paddingIcon: 3)
@@ -576,7 +576,7 @@ class UserNameRowWidget extends StatelessWidget {
               customIcon(context,
                   icon: AppIcon.locationPin,
                   size: 14,
-                  isTwitterIcon: true,
+                  isEchoesIcon: true,
                   paddingIcon: 5,
                   iconColor: AppColor.darkGrey),
               const SizedBox(width: 10),
@@ -596,7 +596,7 @@ class UserNameRowWidget extends StatelessWidget {
               customIcon(context,
                   icon: AppIcon.calender,
                   size: 14,
-                  isTwitterIcon: true,
+                  isEchoesIcon: true,
                   paddingIcon: 5,
                   iconColor: AppColor.darkGrey),
               const SizedBox(width: 10),

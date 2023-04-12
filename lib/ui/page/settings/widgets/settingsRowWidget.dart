@@ -52,7 +52,7 @@ class SettingRowWidget extends StatelessWidget {
                 : UrlText(
                     text: subtitle!,
                     style: TextStyle(
-                        color: TwitterColor.paleSky,
+                        color: EchoesColor.paleSky,
                         fontWeight: FontWeight.w400),
                   ),
             trailing: CustomCheckBox(

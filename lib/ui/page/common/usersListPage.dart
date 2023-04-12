@@ -31,7 +31,7 @@ class UsersListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     List<UserModel>? userList;
     return Scaffold(
-      backgroundColor: TwitterColor.mystic,
+      backgroundColor: EchoesColor.mystic,
       appBar: CustomAppBar(
         isBackButton: true,
         title: customTitleText(

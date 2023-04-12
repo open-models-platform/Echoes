@@ -51,7 +51,7 @@ class ConversationInformation extends StatelessWidget {
                   ? customIcon(
                       context,
                       icon: AppIcon.blueTick,
-                      isTwitterIcon: true,
+                      isEchoesIcon: true,
                       iconColor: AppColor.primary,
                       size: 18,
                       paddingIcon: 3,
@@ -75,7 +75,7 @@ class ConversationInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = Provider.of<ChatState>(context).chatUser ?? UserModel();
     return Scaffold(
-      backgroundColor: TwitterColor.white,
+      backgroundColor: EchoesColor.white,
       appBar: CustomAppBar(
         isBackButton: true,
         title: customTitleText(
@@ -92,17 +92,17 @@ class ConversationInformation extends StatelessWidget {
           ),
           Container(
             height: 15,
-            color: TwitterColor.mystic,
+            color: EchoesColor.mystic,
           ),
           SettingRowWidget(
             "Block ${user.userName}",
-            textColor: TwitterColor.dodgeBlue,
+            textColor: EchoesColor.dodgeBlue,
             showDivider: false,
           ),
           SettingRowWidget("Report ${user.userName}",
-              textColor: TwitterColor.dodgeBlue, showDivider: false),
+              textColor: EchoesColor.dodgeBlue, showDivider: false),
           SettingRowWidget("Delete conversation",
-              textColor: TwitterColor.ceriseRed, showDivider: false),
+              textColor: EchoesColor.ceriseRed, showDivider: false),
         ],
       ),
     );

@@ -3,7 +3,7 @@ part of 'theme.dart';
 class AppIcon {
   AppIcon._();
 
-  static const _kFontFam = 'TwitterIcon';
+  static const _kFontFam = 'EchoesIcon';
   static const IconData fabEchoo = IconData(0xf029, fontFamily: _kFontFam);
   static const IconData messageEmpty = IconData(0xf187, fontFamily: _kFontFam);
   static const IconData messageFill = IconData(0xf554, fontFamily: _kFontFam);
@@ -40,7 +40,7 @@ class AppIcon {
   static const IconData lists = IconData(0xf094, fontFamily: _kFontFam);
   static const IconData bookmark = IconData(0xf155, fontFamily: _kFontFam);
   static const IconData moments = IconData(0xf160, fontFamily: _kFontFam);
-  static const IconData twitterAds = IconData(0xf504, fontFamily: _kFontFam);
+  static const IconData echoesAds = IconData(0xf504, fontFamily: _kFontFam);
   static const IconData bulb = IconData(0xf567, fontFamily: _kFontFam);
   static const IconData newMessage = IconData(0xf035, fontFamily: _kFontFam);
 

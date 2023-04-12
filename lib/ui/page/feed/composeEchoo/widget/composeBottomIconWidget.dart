@@ -64,7 +64,7 @@ class _ComposeBottomIconWidgetState extends State<ComposeBottomIconWidget> {
               },
               icon: customIcon(context,
                   icon: AppIcon.image,
-                  isTwitterIcon: true,
+                  isEchoesIcon: true,
                   iconColor: AppColor.primary)),
           IconButton(
               onPressed: () {
@@ -72,7 +72,7 @@ class _ComposeBottomIconWidgetState extends State<ComposeBottomIconWidget> {
               },
               icon: customIcon(context,
                   icon: AppIcon.camera,
-                  isTwitterIcon: true,
+                  isEchoesIcon: true,
                   iconColor: AppColor.primary)),
           Expanded(
               child: Align(

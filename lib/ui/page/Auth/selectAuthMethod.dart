@@ -88,7 +88,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     child: TitleText(
                       ' Log in',
                       fontSize: 14,
-                      color: TwitterColor.dodgeBlue,
+                      color: EchoesColor.dodgeBlue,
                       fontWeight: FontWeight.w300,
                     ),
                   ),

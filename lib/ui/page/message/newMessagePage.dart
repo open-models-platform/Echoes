@@ -49,7 +49,7 @@ class _NewMessagePageState extends State<NewMessagePage> {
           user.isVerified!
               ? customIcon(context,
                   icon: AppIcon.blueTick,
-                  isTwitterIcon: true,
+                  isEchoesIcon: true,
                   iconColor: AppColor.primary,
                   size: 13,
                   paddingIcon: 3)
@@ -93,13 +93,13 @@ class _NewMessagePageState extends State<NewMessagePage> {
                     prefixIcon: customIcon(
                       context,
                       icon: AppIcon.search,
-                      isTwitterIcon: true,
-                      iconColor: TwitterColor.woodsmoke_50,
+                      isEchoesIcon: true,
+                      iconColor: EchoesColor.woodsmoke_50,
                       size: 25,
                       paddingIcon: 5,
                     ),
                     border: InputBorder.none,
-                    fillColor: TwitterColor.mystic,
+                    fillColor: EchoesColor.mystic,
                     filled: true,
                   ),
                 ),

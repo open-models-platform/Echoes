@@ -14,7 +14,7 @@ class AccountSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = Provider.of<AuthState>(context).userModel ?? UserModel();
     return Scaffold(
-      backgroundColor: TwitterColor.white,
+      backgroundColor: EchoesColor.white,
       appBar: SettingsAppBar(
         title: 'Account',
         subtitle: user.userName,
@@ -48,7 +48,7 @@ class AccountSettingsPage extends StatelessWidget {
           const SettingRowWidget("Apps and sessions"),
           SettingRowWidget(
             "Log out",
-            textColor: TwitterColor.ceriseRed,
+            textColor: EchoesColor.ceriseRed,
             onPressed: () {
               Navigator.popUntil(context, ModalRoute.withName('/'));
               final state = Provider.of<AuthState>(context);

@@ -25,7 +25,7 @@ class EchooBottomSheet {
       ),
       child: customIcon(context,
           icon: AppIcon.arrowDown,
-          isTwitterIcon: true,
+          isEchoesIcon: true,
           iconColor: AppColor.lightGrey),
     ).ripple(
       () {
@@ -136,10 +136,10 @@ class EchooBottomSheet {
                         TextButton(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
-                              TwitterColor.dodgeBlue,
+                              EchoesColor.dodgeBlue,
                             ),
                             foregroundColor: MaterialStateProperty.all(
-                              TwitterColor.white,
+                              EchoesColor.white,
                             ),
                           ),
                           onPressed: () {
@@ -267,10 +267,10 @@ class EchooBottomSheet {
                         TextButton(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
-                              TwitterColor.dodgeBlue,
+                              EchoesColor.dodgeBlue,
                             ),
                             foregroundColor: MaterialStateProperty.all(
-                              TwitterColor.white,
+                              EchoesColor.white,
                             ),
                           ),
                           onPressed: () {
@@ -344,7 +344,7 @@ class EchooBottomSheet {
             customIcon(
               context,
               icon: icon,
-              isTwitterIcon: true,
+              isEchoesIcon: true,
               size: 25,
               paddingIcon: 8,
               iconColor:

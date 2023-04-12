@@ -126,7 +126,7 @@ class _FeedPostDetailState extends State<FeedPostDetail> {
                   Container(
                     height: 6,
                     width: context.width,
-                    color: TwitterColor.mystic,
+                    color: EchoesColor.mystic,
                   )
                 ],
               ),

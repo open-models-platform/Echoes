@@ -14,7 +14,7 @@ class HeaderWidget extends StatelessWidget {
       padding: secondHeader
           ? const EdgeInsets.only(left: 18, right: 18, bottom: 10, top: 35)
           : const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-      color: TwitterColor.mystic,
+      color: EchoesColor.mystic,
       alignment: Alignment.centerLeft,
       child: UrlText(
         text: title ?? '',

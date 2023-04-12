@@ -16,7 +16,7 @@ class SettingsAndPrivacyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = Provider.of<AuthState>(context).userModel ?? UserModel();
     return Scaffold(
-      backgroundColor: TwitterColor.white,
+      backgroundColor: EchoesColor.white,
       appBar: CustomAppBar(
         isBackButton: true,
         title: customTitleText(

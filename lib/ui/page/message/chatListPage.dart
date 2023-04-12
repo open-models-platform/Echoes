@@ -145,7 +145,7 @@ class _ChatListPageState extends State<ChatListPage> {
       child: customIcon(
         context,
         icon: AppIcon.newMessage,
-        isTwitterIcon: true,
+        isEchoesIcon: true,
         iconColor: Theme.of(context).colorScheme.onPrimary,
         size: 25,
       ),
@@ -180,7 +180,7 @@ class _ChatListPageState extends State<ChatListPage> {
         onActionPressed: onSettingIconPressed,
       ),
       floatingActionButton: _newMessageButton(),
-      backgroundColor: TwitterColor.mystic,
+      backgroundColor: EchoesColor.mystic,
       body: _body(),
     );
   }

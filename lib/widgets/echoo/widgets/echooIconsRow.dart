@@ -109,7 +109,7 @@ class EchooIconsRow extends StatelessWidget {
                     context,
                     size: size,
                     icon: icon!,
-                    isTwitterIcon: true,
+                    isEchoesIcon: true,
                     iconColor: iconColor,
                   ),
           ),

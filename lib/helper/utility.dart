@@ -247,7 +247,7 @@ class Utility {
       {required SocialMetaTagParameters socialMetaTagParameters}) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://fwitter.page.link',
-      link: Uri.parse('https://twitter.com/$id'),
+      link: Uri.parse('https://echoes.com/$id'),
       androidParameters: AndroidParameters(
         packageName: 'com.thealphamerc.Echoes_dev',
         minimumVersion: 0,

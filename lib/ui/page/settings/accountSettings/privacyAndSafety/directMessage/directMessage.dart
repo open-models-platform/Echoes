@@ -14,7 +14,7 @@ class DirectMessagesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = Provider.of<AuthState>(context).userModel ?? UserModel();
     return Scaffold(
-      backgroundColor: TwitterColor.white,
+      backgroundColor: EchoesColor.white,
       appBar: SettingsAppBar(
         title: 'Direct Messages',
         subtitle: user.userName,

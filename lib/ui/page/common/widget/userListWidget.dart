@@ -103,7 +103,7 @@ class UserTile extends StatelessWidget {
     bool isFollow = checkIfFollowing();
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      color: TwitterColor.white,
+      color: EchoesColor.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -135,7 +135,7 @@ class UserTile extends StatelessWidget {
                     ? customIcon(
                         context,
                         icon: AppIcon.blueTick,
-                        isTwitterIcon: true,
+                        isEchoesIcon: true,
                         iconColor: AppColor.primary,
                         size: 13,
                         paddingIcon: 3,
@@ -146,7 +146,7 @@ class UserTile extends StatelessWidget {
             subtitle: Text(user.userName!),
             trailing: RippleButton(
               onPressed: onTrailingPressed,
-              splashColor: TwitterColor.dodgeBlue_50.withAlpha(100),
+              splashColor: EchoesColor.dodgeBlue_50.withAlpha(100),
               borderRadius: BorderRadius.circular(25),
               child: trailing ??
                   Container(
@@ -156,16 +156,16 @@ class UserTile extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       color: isFollow
-                          ? TwitterColor.dodgeBlue
-                          : TwitterColor.white,
+                          ? EchoesColor.dodgeBlue
+                          : EchoesColor.white,
                       border:
-                          Border.all(color: TwitterColor.dodgeBlue, width: 1),
+                          Border.all(color: EchoesColor.dodgeBlue, width: 1),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: Text(
                       isFollow ? 'Following' : 'Follow',
                       style: TextStyle(
-                        color: isFollow ? TwitterColor.white : Colors.blue,
+                        color: isFollow ? EchoesColor.white : Colors.blue,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),

@@ -128,7 +128,7 @@ class Echoo extends StatelessWidget {
                   model: model,
                   isEchooDetail: type == EchooType.Detail,
                   iconColor: Theme.of(context).textTheme.caption!.color!,
-                  iconEnableColor: TwitterColor.ceriseRed,
+                  iconEnableColor: EchoesColor.ceriseRed,
                   size: 20,
                   scaffoldKey: GlobalKey<ScaffoldState>(),
                 ),
@@ -221,7 +221,7 @@ class _EchooBody extends StatelessWidget {
                             ? customIcon(
                                 context,
                                 icon: AppIcon.blueTick,
-                                isTwitterIcon: true,
+                                isEchoesIcon: true,
                                 iconColor: AppColor.primary,
                                 size: 13,
                                 paddingIcon: 3,
@@ -359,7 +359,7 @@ class _EchooDetailBody extends StatelessWidget {
                         ? customIcon(
                             context,
                             icon: AppIcon.blueTick,
-                            isTwitterIcon: true,
+                            isEchoesIcon: true,
                             iconColor: AppColor.primary,
                             size: 13,
                             paddingIcon: 3,

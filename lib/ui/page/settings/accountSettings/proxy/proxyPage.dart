@@ -10,7 +10,7 @@ class ProxyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TwitterColor.white,
+      backgroundColor: EchoesColor.white,
       appBar: CustomAppBar(
         isBackButton: true,
         title: customTitleText(

@@ -109,7 +109,7 @@ class _SignInState extends State<SignIn> {
       child: Text(
         title,
         style: TextStyle(
-            color: TwitterColor.dodgeBlue, fontWeight: FontWeight.bold),
+            color: EchoesColor.dodgeBlue, fontWeight: FontWeight.bold),
       ),
     );
   }

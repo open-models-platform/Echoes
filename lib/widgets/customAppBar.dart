@@ -100,7 +100,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   },
                   icon: customIcon(context,
                       icon: icon!,
-                      isTwitterIcon: true,
+                      isEchoesIcon: true,
                       iconColor: AppColor.primary,
                       size: 25),
                 )

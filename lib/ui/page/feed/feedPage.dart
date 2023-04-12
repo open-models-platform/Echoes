@@ -28,7 +28,7 @@ class FeedPage extends StatelessWidget {
       child: customIcon(
         context,
         icon: AppIcon.fabEchoo,
-        isTwitterIcon: true,
+        isEchoesIcon: true,
         iconColor: Theme.of(context).colorScheme.onPrimary,
         size: 25,
       ),
@@ -39,7 +39,7 @@ class FeedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: _floatingActionButton(context),
-      backgroundColor: TwitterColor.mystic,
+      backgroundColor: EchoesColor.mystic,
       body: SafeArea(
         child: SizedBox(
           height: context.height,

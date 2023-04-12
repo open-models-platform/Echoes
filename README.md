@@ -1,6 +1,6 @@
-## Echooes - Twitter clone in flutter [![GitHub stars](https://img.shields.io/github/stars/Thealphamerc/Echoes?style=social)](https://github.com/login?return_to=%2Fopen-models-platform%Echoes) ![GitHub forks](https://img.shields.io/github/forks/open-models-platform/Echoes?style=social)
+## Echooes - Echoes clone in flutter [![GitHub stars](https://img.shields.io/github/stars/Thealphamerc/Echoes?style=social)](https://github.com/login?return_to=%2Fopen-models-platform%Echoes) ![GitHub forks](https://img.shields.io/github/forks/open-models-platform/Echoes?style=social)
 
-A working Twitter clone built in Flutter using Firebase auth,realtime,firestore database and storage.
+A working Echoes clone built in Flutter using Firebase auth,realtime,firestore database and storage.
 
 <a href="https://play.google.com/store/apps/details?id=com.thealphamerc.Echoes">
   <img width="100%" alt="Fwiiter Banner" src="https://user-images.githubusercontent.com/37103237/152671482-885fd940-f4ea-4fb6-8baf-816c17b541d7.png">
@@ -169,7 +169,7 @@ Content Prefrences Page      |  Display Setting Page    |  Data Settings Page   
 |   |   '-- settings
 |   |       |-- accountSettings
 |   |       |   |-- about
-|   |       |   |   '-- aboutTwitter.dart
+|   |       |   |   '-- aboutEchoes.dart
 |   |       |   |-- accessibility
 |   |       |   |   '-- accessibility.dart
 |   |       |   |-- accountSettingsPage.dart
@@ -239,8 +239,8 @@ and send a [pull request](https://github.com/open-models-platform/Echoes/pulls).
 
 ## Created & Maintained By
 
-[Sonu Sharma](https://github.com/open-models-platform) ([Twitter](https://www.twitter.com/open-models-platform)) ([Youtube](https://www.youtube.com/user/sonusharma045sonu/)) ([Insta](https://www.instagram.com/_sonu_sharma__)) ([Dev.to](https://dev.to/thealphamerc))
-  ![Twitter Follow](https://img.shields.io/twitter/follow/thealphamerc?style=social)
+[Sonu Sharma](https://github.com/open-models-platform) ([Echoes](https://www.echoes.com/open-models-platform)) ([Youtube](https://www.youtube.com/user/sonusharma045sonu/)) ([Insta](https://www.instagram.com/_sonu_sharma__)) ([Dev.to](https://dev.to/thealphamerc))
+  ![Echoes Follow](https://img.shields.io/echoes/follow/thealphamerc?style=social)
 
 > If you found this project helpful or you learned something from the source code and want to thank me, consider buying me a cup of :coffee:
 >

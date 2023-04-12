@@ -28,7 +28,7 @@ class BookmarkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TwitterColor.mystic,
+      backgroundColor: EchoesColor.mystic,
       appBar: CustomAppBar(
         title: Text("Bookmark", style: TextStyles.titleStyle),
         isBackButton: true,

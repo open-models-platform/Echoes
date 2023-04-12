@@ -12,7 +12,7 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TwitterColor.white,
+      backgroundColor: EchoesColor.white,
       appBar: CustomAppBar(
         isBackButton: true,
         title: customTitleText(
@@ -67,8 +67,8 @@ class AboutPage extends StatelessWidget {
           SettingRowWidget("LinkidIn", showDivider: true, onPressed: () {
             Utility.launchURL("https://www.linkedin.com/in/thealphamerc/");
           }),
-          SettingRowWidget("Twitter", showDivider: true, onPressed: () {
-            Utility.launchURL("https://twitter.com/TheAlphaMerc");
+          SettingRowWidget("Echoes", showDivider: true, onPressed: () {
+            Utility.launchURL("https://echoes.com/TheAlphaMerc");
           }),
           SettingRowWidget("Blog", showDivider: true, onPressed: () {
             Utility.launchURL("https://dev.to/thealphamerc");

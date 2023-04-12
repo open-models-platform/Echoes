@@ -114,20 +114,20 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                       decoration: BoxDecoration(
                         borderRadius: getBorder(myMessage),
                         color: myMessage
-                            ? TwitterColor.dodgeBlue
-                            : TwitterColor.mystic,
+                            ? EchoesColor.dodgeBlue
+                            : EchoesColor.mystic,
                       ),
                       child: UrlText(
                         text: chat.message!,
                         style: TextStyle(
                           fontSize: 16,
-                          color: myMessage ? TwitterColor.white : Colors.black,
+                          color: myMessage ? EchoesColor.white : Colors.black,
                         ),
                         urlStyle: TextStyle(
                           fontSize: 16,
                           color: myMessage
-                              ? TwitterColor.white
-                              : TwitterColor.dodgeBlue,
+                              ? EchoesColor.white
+                              : EchoesColor.dodgeBlue,
                           decoration: TextDecoration.underline,
                         ),
                       ),
@@ -145,7 +145,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                     //       _scaffoldKey.currentState.hideCurrentSnackBar();
                     //       _scaffoldKey.currentState.showSnackBar(
                     //         SnackBar(
-                    //           backgroundColor: TwitterColor.white,
+                    //           backgroundColor: EchoesColor.white,
                     //           content: Text(
                     //             'Message copied',
                     //             style: TextStyle(color: Colors.black),

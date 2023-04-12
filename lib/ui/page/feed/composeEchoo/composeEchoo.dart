@@ -278,7 +278,7 @@ class _ComposeReechoo
                       ? customIcon(
                           context,
                           icon: AppIcon.blueTick,
-                          isTwitterIcon: true,
+                          isEchoesIcon: true,
                           iconColor: AppColor.primary,
                           size: 13,
                           paddingIcon: 3,
@@ -432,7 +432,7 @@ class _ComposeEchoo
                     text:
                         'Replying to ${viewState.model!.user!.userName ?? viewState.model!.user!.displayName}',
                     style: TextStyle(
-                      color: TwitterColor.paleSky,
+                      color: EchoesColor.paleSky,
                       fontSize: 13,
                     ),
                   ),
@@ -459,7 +459,7 @@ class _ComposeEchoo
                     ? customIcon(
                         context,
                         icon: AppIcon.blueTick,
-                        isTwitterIcon: true,
+                        isEchoesIcon: true,
                         iconColor: AppColor.primary,
                         size: 13,
                         paddingIcon: 3,
@@ -583,7 +583,7 @@ class _UserList extends StatelessWidget {
         ? const SizedBox.shrink()
         : Container(
             padding: const EdgeInsetsDirectional.only(bottom: 50),
-            color: TwitterColor.white,
+            color: EchoesColor.white,
             constraints:
                 const BoxConstraints(minHeight: 30, maxHeight: double.infinity),
             child: ListView.builder(
@@ -637,7 +637,7 @@ class _UserTile extends StatelessWidget {
               ? customIcon(
                   context,
                   icon: AppIcon.blueTick,
-                  isTwitterIcon: true,
+                  isEchoesIcon: true,
                   iconColor: AppColor.primary,
                   size: 13,
                   paddingIcon: 3,
