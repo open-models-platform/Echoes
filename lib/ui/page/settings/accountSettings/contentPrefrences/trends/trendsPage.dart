@@ -1,11 +1,11 @@
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/state/searchState.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsRowWidget.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customAppBar.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/newWidget/title_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsRowWidget.dart';
-import 'package:flutter_twitter_clone/state/searchState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customAppBar.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/title_text.dart';
 import 'package:provider/provider.dart';
 
 class TrendsPage extends StatelessWidget {

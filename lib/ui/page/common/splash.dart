@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/ui/page/Auth/selectAuthMethod.dart';
+import 'package:Echoes/ui/page/common/updateApp.dart';
+import 'package:Echoes/ui/page/homePage.dart';
+import 'package:Echoes/ui/theme/theme.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/ui/page/Auth/selectAuthMethod.dart';
-import 'package:flutter_twitter_clone/ui/page/common/updateApp.dart';
-import 'package:flutter_twitter_clone/ui/page/homePage.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 

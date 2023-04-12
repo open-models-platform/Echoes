@@ -1,28 +1,28 @@
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/chats/chatState.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/state/profile_state.dart';
+import 'package:Echoes/ui/page/profile/EditProfilePage.dart';
+import 'package:Echoes/ui/page/profile/follow/followerListPage.dart';
+import 'package:Echoes/ui/page/profile/follow/followingListPage.dart';
+import 'package:Echoes/ui/page/profile/profileImageView.dart';
+import 'package:Echoes/ui/page/profile/qrCode/scanner.dart';
+import 'package:Echoes/ui/page/profile/widgets/circular_image.dart';
+import 'package:Echoes/ui/page/profile/widgets/tabPainter.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/cache_image.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/echoo/echoo.dart';
+import 'package:Echoes/widgets/echoo/widgets/echooBottomSheet.dart';
+import 'package:Echoes/widgets/newWidget/customLoader.dart';
+import 'package:Echoes/widgets/newWidget/emptyList.dart';
+import 'package:Echoes/widgets/newWidget/rippleButton.dart';
+import 'package:Echoes/widgets/url_text/customUrlText.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/state/chats/chatState.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/state/profile_state.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/EditProfilePage.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/follow/followerListPage.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/follow/followingListPage.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/profileImageView.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/qrCode/scanner.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/widgets/circular_image.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/widgets/tabPainter.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/cache_image.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/customLoader.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/emptyList.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/rippleButton.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/tweet.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/widgets/tweetBottomSheet.dart';
-import 'package:flutter_twitter_clone/widgets/url_text/customUrlText.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -282,7 +282,7 @@ class _ProfilePageState extends State<ProfilePage>
       },
       child: customIcon(
         context,
-        icon: AppIcon.fabTweet,
+        icon: AppIcon.fabEchoo,
         isTwitterIcon: true,
         iconColor: Theme.of(context).colorScheme.onPrimary,
         size: 25,
@@ -323,8 +323,8 @@ class _ProfilePageState extends State<ProfilePage>
       socialMetaTagParameters: SocialMetaTagParameters(
         description: !user.bio!.contains("Edit profile")
             ? user.bio
-            : "Checkout ${user.displayName}'s profile on Fwitter app",
-        title: "${user.displayName} is on Fwitter app",
+            : "Checkout ${user.displayName}'s profile on Echooes app",
+        title: "${user.displayName} is on Echooes app",
         imageUrl: Uri.parse(user.profilePic!),
       ),
     );
@@ -337,7 +337,7 @@ class _ProfilePageState extends State<ProfilePage>
     List<FeedModel>? list;
     String id = widget.profileId;
 
-    /// Filter user's tweet among all tweets available in home page tweets list
+    /// Filter user's echoo among all echoos available in home page echoos list
     if (state.feedList != null && state.feedList!.isNotEmpty) {
       list = state.feedList!.where((x) => x.userId == id).toList();
     }
@@ -374,8 +374,8 @@ class _ProfilePageState extends State<ProfilePage>
                         indicator: TabIndicator(),
                         controller: _tabController,
                         tabs: const <Widget>[
-                          Text("Tweets"),
-                          Text("Tweets & replies"),
+                          Text("Echoos"),
+                          Text("Echoos & replies"),
                           Text("Media")
                         ],
                       ),
@@ -388,14 +388,14 @@ class _ProfilePageState extends State<ProfilePage>
           body: TabBarView(
             controller: _tabController,
             children: [
-              /// Display all independent tweets list
-              _tweetList(context, authState, list, false, false),
+              /// Display all independent echoos list
+              _echooList(context, authState, list, false, false),
 
-              /// Display all reply tweet list
-              _tweetList(context, authState, list, true, false),
+              /// Display all reply echoo list
+              _echooList(context, authState, list, true, false),
 
-              /// Display all reply and comments tweet list
-              _tweetList(context, authState, list, false, true)
+              /// Display all reply and comments echoo list
+              _echooList(context, authState, list, false, true)
             ],
           ),
         ),
@@ -403,28 +403,28 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 
-  Widget _tweetList(BuildContext context, ProfileState authState,
-      List<FeedModel>? tweetsList, bool isReply, bool isMedia) {
+  Widget _echooList(BuildContext context, ProfileState authState,
+      List<FeedModel>? echoosList, bool isReply, bool isMedia) {
     List<FeedModel>? list;
 
-    /// If user hasn't tweeted yet
-    if (tweetsList == null) {
-      // cprint('No Tweet available');
+    /// If user hasn't echooed yet
+    if (echoosList == null) {
+      // cprint('No Echoo available');
     } else if (isMedia) {
-      /// Display all Tweets with media file
+      /// Display all Echoos with media file
 
-      list = tweetsList.where((x) => x.imagePath != null).toList();
+      list = echoosList.where((x) => x.imagePath != null).toList();
     } else if (!isReply) {
-      /// Display all independent Tweets
-      /// No comments Tweet will display
+      /// Display all independent Echoos
+      /// No comments Echoo will display
 
-      list = tweetsList
+      list = echoosList
           .where((x) => x.parentkey == null || x.childRetwetkey != null)
           .toList();
     } else {
-      /// Display all reply Tweets
-      /// No independent tweet will display
-      list = tweetsList
+      /// Display all reply Echoos
+      /// No independent echoo will display
+      list = echoosList
           .where((x) => x.parentkey != null && x.childRetwetkey == null)
           .toList();
     }
@@ -440,33 +440,33 @@ class _ProfilePageState extends State<ProfilePage>
             ),
           )
 
-        /// if tweet list is empty or null then need to show user a message
+        /// if echoo list is empty or null then need to show user a message
         : list == null || list.isEmpty
             ? Container(
                 padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
                 child: NotifyText(
                   title: isMyProfile
-                      ? 'You haven\'t ${isReply ? 'reply to any Tweet' : isMedia ? 'post any media Tweet yet' : 'post any Tweet yet'}'
-                      : '${authState.profileUserModel.userName} hasn\'t ${isReply ? 'reply to any Tweet' : isMedia ? 'post any media Tweet yet' : 'post any Tweet yet'}',
+                      ? 'You haven\'t ${isReply ? 'reply to any Echoo' : isMedia ? 'post any media Echoo yet' : 'post any Echoo yet'}'
+                      : '${authState.profileUserModel.userName} hasn\'t ${isReply ? 'reply to any Echoo' : isMedia ? 'post any media Echoo yet' : 'post any Echoo yet'}',
                   subTitle: isMyProfile
-                      ? 'Tap tweet button to add new'
+                      ? 'Tap echoo button to add new'
                       : 'Once he\'ll do, they will be shown up here',
                 ),
               )
 
-            /// If tweets available then tweet list will displayed
+            /// If echoos available then echoo list will displayed
             : ListView.builder(
                 padding: const EdgeInsets.symmetric(vertical: 0),
                 itemCount: list.length,
                 itemBuilder: (context, index) => Container(
                   color: TwitterColor.white,
-                  child: Tweet(
+                  child: Echoo(
                     model: list![index],
                     isDisplayOnProfile: true,
-                    trailing: TweetBottomSheet().tweetOptionIcon(
+                    trailing: EchooBottomSheet().echooOptionIcon(
                       context,
                       model: list[index],
-                      type: TweetType.Tweet,
+                      type: EchooType.Echoo,
                       scaffoldKey: scaffoldKey,
                     ),
                     scaffoldKey: scaffoldKey,

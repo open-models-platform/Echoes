@@ -1,21 +1,21 @@
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/echoo/echoo.dart';
+import 'package:Echoes/widgets/share_widget.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/share_widget.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/tweet.dart';
 import 'package:provider/provider.dart';
 
-class TweetBottomSheet {
-  Widget tweetOptionIcon(BuildContext context,
+class EchooBottomSheet {
+  Widget echooOptionIcon(BuildContext context,
       {required FeedModel model,
-      required TweetType type,
+      required EchooType type,
       required GlobalKey<ScaffoldState> scaffoldKey}) {
     return Container(
       width: 25,
@@ -37,11 +37,11 @@ class TweetBottomSheet {
   }
 
   void _openBottomSheet(BuildContext context,
-      {required TweetType type,
+      {required EchooType type,
       required FeedModel model,
       required GlobalKey<ScaffoldState> scaffoldKey}) async {
     var authState = Provider.of<AuthState>(context, listen: false);
-    bool isMyTweet = authState.userId == model.userId;
+    bool isMyEchoo = authState.userId == model.userId;
     await showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
@@ -49,9 +49,9 @@ class TweetBottomSheet {
         return Container(
             padding: const EdgeInsets.only(top: 5, bottom: 0),
             height: context.height *
-                (type == TweetType.Tweet
-                    ? (isMyTweet ? .25 : .44)
-                    : (isMyTweet ? .38 : .52)),
+                (type == EchooType.Echoo
+                    ? (isMyEchoo ? .25 : .44)
+                    : (isMyEchoo ? .38 : .52)),
             width: context.width,
             decoration: BoxDecoration(
               color: Theme.of(context).bottomSheetTheme.backgroundColor,
@@ -60,25 +60,25 @@ class TweetBottomSheet {
                 topRight: Radius.circular(20),
               ),
             ),
-            child: type == TweetType.Tweet
-                ? _tweetOptions(context,
+            child: type == EchooType.Echoo
+                ? _echooOptions(context,
                     scaffoldKey: scaffoldKey,
-                    isMyTweet: isMyTweet,
+                    isMyEchoo: isMyEchoo,
                     model: model,
                     type: type)
-                : _tweetDetailOptions(context,
+                : _echooDetailOptions(context,
                     scaffoldKey: scaffoldKey,
-                    isMyTweet: isMyTweet,
+                    isMyEchoo: isMyEchoo,
                     model: model,
                     type: type));
       },
     );
   }
 
-  Widget _tweetDetailOptions(BuildContext context,
-      {required bool isMyTweet,
+  Widget _echooDetailOptions(BuildContext context,
+      {required bool isMyEchoo,
       required FeedModel model,
-      required TweetType type,
+      required EchooType type,
       required GlobalKey<ScaffoldState> scaffoldKey}) {
     return Column(
       children: <Widget>[
@@ -93,15 +93,15 @@ class TweetBottomSheet {
           ),
         ),
         _widgetBottomSheetRow(context, AppIcon.link,
-            text: 'Copy link to tweet', isEnable: true, onPressed: () async {
+            text: 'Copy link to echoo', isEnable: true, onPressed: () async {
           Navigator.pop(context);
           var uri = await Utility.createLinkToShare(
             context,
-            "tweet/${model.key}",
+            "echoo/${model.key}",
             socialMetaTagParameters: SocialMetaTagParameters(
                 description: model.description ??
-                    "${model.user!.displayName} posted a tweet on Fwitter.",
-                title: "Tweet on Fwitter app",
+                    "${model.user!.displayName} posted a echoo on Echooes.",
+                title: "Echoo on Echooes app",
                 imageUrl: Uri.parse(
                     "https://play-lh.googleusercontent.com/e66XMuvW5hZ7HnFf8R_lcA3TFgkxm0SuyaMsBs3KENijNHZlogUAjxeu9COqsejV5w=s180-rw")),
           );
@@ -109,19 +109,19 @@ class TweetBottomSheet {
           Utility.copyToClipBoard(
               context: context,
               text: uri.toString(),
-              message: "Tweet link copy to clipboard");
+              message: "Echoo link copy to clipboard");
         }),
-        isMyTweet
+        isMyEchoo
             ? _widgetBottomSheetRow(
                 context,
                 AppIcon.delete,
-                text: 'Delete Tweet',
+                text: 'Delete Echoo',
                 onPressed: () {
                   showDialog(
                     context: context,
                     builder: (_) => AlertDialog(
                       title: const Text("Delete"),
-                      content: const Text('Do you want to delete this Tweet?'),
+                      content: const Text('Do you want to delete this Echoo?'),
                       actions: [
                         // ignore: deprecated_member_use
                         TextButton(
@@ -144,7 +144,7 @@ class TweetBottomSheet {
                           ),
                           onPressed: () {
                             Navigator.pop(context);
-                            _deleteTweet(
+                            _deleteEchoo(
                               context,
                               type,
                               model.key!,
@@ -160,7 +160,7 @@ class TweetBottomSheet {
                 isEnable: true,
               )
             : Container(),
-        isMyTweet
+        isMyEchoo
             ? _widgetBottomSheetRow(
                 context,
                 AppIcon.unFollow,
@@ -171,7 +171,7 @@ class TweetBottomSheet {
                 AppIcon.unFollow,
                 text: 'Unfollow ${model.user!.userName}',
               ),
-        isMyTweet
+        isMyEchoo
             ? Container()
             : _widgetBottomSheetRow(
                 context,
@@ -188,28 +188,28 @@ class TweetBottomSheet {
           AppIcon.viewHidden,
           text: 'View hidden replies',
         ),
-        isMyTweet
+        isMyEchoo
             ? Container()
             : _widgetBottomSheetRow(
                 context,
                 AppIcon.block,
                 text: 'Block ${model.user!.userName}',
               ),
-        isMyTweet
+        isMyEchoo
             ? Container()
             : _widgetBottomSheetRow(
                 context,
                 AppIcon.report,
-                text: 'Report Tweet',
+                text: 'Report Echoo',
               ),
       ],
     );
   }
 
-  Widget _tweetOptions(BuildContext context,
-      {required bool isMyTweet,
+  Widget _echooOptions(BuildContext context,
+      {required bool isMyEchoo,
       required FeedModel model,
-      required TweetType type,
+      required EchooType type,
       required GlobalKey<ScaffoldState> scaffoldKey}) {
     return Column(
       children: <Widget>[
@@ -224,14 +224,14 @@ class TweetBottomSheet {
           ),
         ),
         _widgetBottomSheetRow(context, AppIcon.link,
-            text: 'Copy link to tweet', isEnable: true, onPressed: () async {
+            text: 'Copy link to echoo', isEnable: true, onPressed: () async {
           var uri = await Utility.createLinkToShare(
             context,
-            "tweet/${model.key}",
+            "echoo/${model.key}",
             socialMetaTagParameters: SocialMetaTagParameters(
                 description: model.description ??
-                    "${model.user!.displayName} posted a tweet on Fwitter.",
-                title: "Tweet on Fwitter app",
+                    "${model.user!.displayName} posted a echoo on Echooes.",
+                title: "Echoo on Echooes app",
                 imageUrl: Uri.parse(
                     "https://play-lh.googleusercontent.com/e66XMuvW5hZ7HnFf8R_lcA3TFgkxm0SuyaMsBs3KENijNHZlogUAjxeu9COqsejV5w=s180-rw")),
           );
@@ -240,19 +240,19 @@ class TweetBottomSheet {
           Utility.copyToClipBoard(
               context: context,
               text: uri.toString(),
-              message: "Tweet link copy to clipboard");
+              message: "Echoo link copy to clipboard");
         }),
-        isMyTweet
+        isMyEchoo
             ? _widgetBottomSheetRow(
                 context,
                 AppIcon.delete,
-                text: 'Delete Tweet',
+                text: 'Delete Echoo',
                 onPressed: () {
                   showDialog(
                     context: context,
                     builder: (_) => AlertDialog(
                       title: const Text("Delete"),
-                      content: const Text('Do you want to delete this Tweet?'),
+                      content: const Text('Do you want to delete this Echoo?'),
                       actions: [
                         // ignore: deprecated_member_use
                         TextButton(
@@ -275,7 +275,7 @@ class TweetBottomSheet {
                           ),
                           onPressed: () {
                             Navigator.pop(context);
-                            _deleteTweet(
+                            _deleteEchoo(
                               context,
                               type,
                               model.key!,
@@ -291,7 +291,7 @@ class TweetBottomSheet {
                 isEnable: true,
               )
             : Container(),
-        isMyTweet
+        isMyEchoo
             ? _widgetBottomSheetRow(
                 context,
                 AppIcon.thumbpinFill,
@@ -302,33 +302,33 @@ class TweetBottomSheet {
                 AppIcon.sadFace,
                 text: 'Not interested in this',
               ),
-        isMyTweet
+        isMyEchoo
             ? Container()
             : _widgetBottomSheetRow(
                 context,
                 AppIcon.unFollow,
                 text: 'Unfollow ${model.user!.userName}',
               ),
-        isMyTweet
+        isMyEchoo
             ? Container()
             : _widgetBottomSheetRow(
                 context,
                 AppIcon.mute,
                 text: 'Mute ${model.user!.userName}',
               ),
-        isMyTweet
+        isMyEchoo
             ? Container()
             : _widgetBottomSheetRow(
                 context,
                 AppIcon.block,
                 text: 'Block ${model.user!.userName}',
               ),
-        isMyTweet
+        isMyEchoo
             ? Container()
             : _widgetBottomSheetRow(
                 context,
                 AppIcon.report,
-                text: 'Report Tweet',
+                text: 'Report Echoo',
               ),
       ],
     );
@@ -374,22 +374,22 @@ class TweetBottomSheet {
     );
   }
 
-  void _deleteTweet(BuildContext context, TweetType type, String tweetId,
+  void _deleteEchoo(BuildContext context, EchooType type, String echooId,
       {String? parentkey}) {
     var state = Provider.of<FeedState>(context, listen: false);
-    state.deleteTweet(tweetId, type, parentkey: parentkey);
+    state.deleteEchoo(echooId, type, parentkey: parentkey);
     // CLose bottom sheet
     Navigator.of(context).pop();
-    if (type == TweetType.Detail) {
-      // Close Tweet detail page
+    if (type == EchooType.Detail) {
+      // Close Echoo detail page
       Navigator.of(context).pop();
-      // Remove last tweet from tweet detail stack page
-      state.removeLastTweetDetail(tweetId);
+      // Remove last echoo from echoo detail stack page
+      state.removeLastEchooDetail(echooId);
     }
   }
 
-  void openRetweetBottomSheet(BuildContext context,
-      {TweetType? type,
+  void openReechooBottomSheet(BuildContext context,
+      {EchooType? type,
       required FeedModel model,
       required GlobalKey<ScaffoldState> scaffoldKey}) async {
     await showModalBottomSheet(
@@ -407,12 +407,12 @@ class TweetBottomSheet {
                 topRight: Radius.circular(20),
               ),
             ),
-            child: _retweet(context, model, type));
+            child: _reechoo(context, model, type));
       },
     );
   }
 
-  Widget _retweet(BuildContext context, FeedModel model, TweetType? type) {
+  Widget _reechoo(BuildContext context, FeedModel model, EchooType? type) {
     return Column(
       children: <Widget>[
         Container(
@@ -427,9 +427,9 @@ class TweetBottomSheet {
         ),
         _widgetBottomSheetRow(
           context,
-          AppIcon.retweet,
+          AppIcon.reechoo,
           isEnable: true,
-          text: 'Retweet',
+          text: 'Reechoo',
           onPressed: () async {
             var state = Provider.of<FeedState>(context, listen: false);
             var authState = Provider.of<AuthState>(context, listen: false);
@@ -440,45 +440,45 @@ class TweetBottomSheet {
                 userId: myUser.userId,
                 isVerified: authState.userModel!.isVerified,
                 userName: authState.userModel!.userName);
-            // Prepare current Tweet model to reply
+            // Prepare current Echoo model to reply
             FeedModel post = FeedModel(
-                childRetwetkey: model.getTweetKeyToRetweet,
+                childRetwetkey: model.getEchooKeyToReechoo,
                 createdAt: DateTime.now().toUtc().toString(),
                 user: myUser,
                 userId: myUser.userId!);
-            state.createTweet(post);
+            state.createEchoo(post);
 
             Navigator.pop(context);
-            var sharedPost = await state.fetchTweet(post.childRetwetkey!);
+            var sharedPost = await state.fetchEchoo(post.childRetwetkey!);
             if (sharedPost != null) {
-              sharedPost.retweetCount ??= 0;
-              sharedPost.retweetCount = sharedPost.retweetCount! + 1;
-              state.updateTweet(sharedPost);
+              sharedPost.reechooCount ??= 0;
+              sharedPost.reechooCount = sharedPost.reechooCount! + 1;
+              state.updateEchoo(sharedPost);
             }
           },
         ),
         _widgetBottomSheetRow(
           context,
           AppIcon.edit,
-          text: 'Retweet with comment',
+          text: 'Reechoo with comment',
           isEnable: true,
           onPressed: () {
             var state = Provider.of<FeedState>(context, listen: false);
-            // Prepare current Tweet model to reply
-            state.setTweetToReply = model;
+            // Prepare current Echoo model to reply
+            state.setEchooToReply = model;
             Navigator.pop(context);
 
-            /// `/ComposeTweetPage/retweet` route is used to identify that tweet is going to be retweet.
-            /// To simple reply on any `Tweet` use `ComposeTweetPage` route.
-            Navigator.of(context).pushNamed('/ComposeTweetPage/retweet');
+            /// `/ComposeEchooPage/reechoo` route is used to identify that echoo is going to be reechoo.
+            /// To simple reply on any `Echoo` use `ComposeEchooPage` route.
+            Navigator.of(context).pushNamed('/ComposeEchooPage/reechoo');
           },
         )
       ],
     );
   }
 
-  void openShareTweetBottomSheet(
-      BuildContext context, FeedModel model, TweetType? type) async {
+  void openShareEchooBottomSheet(
+      BuildContext context, FeedModel model, EchooType? type) async {
     await showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
@@ -494,15 +494,15 @@ class TweetBottomSheet {
                 topRight: Radius.circular(20),
               ),
             ),
-            child: _shareTweet(context, model, type));
+            child: _shareEchoo(context, model, type));
       },
     );
   }
 
-  Widget _shareTweet(BuildContext context, FeedModel model, TweetType? type) {
+  Widget _shareEchoo(BuildContext context, FeedModel model, EchooType? type) {
     var socialMetaTagParameters = SocialMetaTagParameters(
         description: model.description ?? "",
-        title: "${model.user!.displayName} posted a tweet on Fwitter.",
+        title: "${model.user!.displayName} posted a echoo on Echooes.",
         imageUrl: Uri.parse(model.user?.profilePic ??
             "https://play-lh.googleusercontent.com/e66XMuvW5hZ7HnFf8R_lcA3TFgkxm0SuyaMsBs3KENijNHZlogUAjxeu9COqsejV5w=s180-rw"));
     return Column(
@@ -542,23 +542,23 @@ class TweetBottomSheet {
             Navigator.pop(context);
             var url = Utility.createLinkToShare(
               context,
-              "tweet/${model.key}",
+              "echoo/${model.key}",
               socialMetaTagParameters: socialMetaTagParameters,
             );
             var uri = await url;
-            Utility.share(uri.toString(), subject: "Tweet");
+            Utility.share(uri.toString(), subject: "Echoo");
           },
         ),
         const SizedBox(height: 8),
         _widgetBottomSheetRow(
           context,
           AppIcon.image,
-          text: 'Share with Tweet thumbnail',
+          text: 'Share with Echoo thumbnail',
           isEnable: true,
           onPressed: () {
             socialMetaTagParameters = SocialMetaTagParameters(
                 description: model.description ?? "",
-                title: "${model.user!.displayName} posted a tweet on Fwitter.",
+                title: "${model.user!.displayName} posted a echoo on Echooes.",
                 imageUrl: Uri.parse(model.user?.profilePic ??
                     "https://play-lh.googleusercontent.com/e66XMuvW5hZ7HnFf8R_lcA3TFgkxm0SuyaMsBs3KENijNHZlogUAjxeu9COqsejV5w=s180-rw"));
             Navigator.pop(context);
@@ -566,15 +566,15 @@ class TweetBottomSheet {
               context,
               ShareWidget.getRoute(
                   child: type != null
-                      ? Tweet(
+                      ? Echoo(
                           model: model,
                           type: type,
                           scaffoldKey: GlobalKey<ScaffoldState>(),
                         )
-                      : Tweet(
+                      : Echoo(
                           model: model,
                           scaffoldKey: GlobalKey<ScaffoldState>()),
-                  id: "tweet/${model.key}",
+                  id: "echoo/${model.key}",
                   socialMetaTagParameters: socialMetaTagParameters),
             );
           },

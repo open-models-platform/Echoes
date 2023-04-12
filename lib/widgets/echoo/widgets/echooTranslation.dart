@@ -1,20 +1,20 @@
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/url_text/customUrlText.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/url_text/customUrlText.dart';
 import 'package:provider/provider.dart';
 import 'package:translator/translator.dart';
 
-class TweetTranslation extends StatelessWidget {
+class EchooTranslation extends StatelessWidget {
   final String description;
-  final String tweetKey;
+  final String echooKey;
   final TextStyle? textStyle;
   final TextStyle? urlStyle;
   final String? languageCode;
-  const TweetTranslation(
+  const EchooTranslation(
       {Key? key,
-      required this.tweetKey,
+      required this.echooKey,
       required this.description,
       required this.languageCode,
       this.textStyle,
@@ -31,9 +31,9 @@ class TweetTranslation extends StatelessWidget {
       if (/*languageCode == null ||*/ languageCode == localeLanguageCode)
         return SizedBox.shrink();
 
-      if (state.tweetsTranslations.containsKey(tweetKey)) {
-        if (state.tweetsTranslations[tweetKey] != null) {
-          return _translation(state.tweetsTranslations[tweetKey]!, context,
+      if (state.echoosTranslations.containsKey(echooKey)) {
+        if (state.echoosTranslations[echooKey] != null) {
+          return _translation(state.echoosTranslations[echooKey]!, context,
               textStyle, urlStyle);
         } else {
           return SizedBox.shrink();
@@ -45,10 +45,10 @@ class TweetTranslation extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<Translation> snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data!.text == snapshot.data!.source.trim()) {
-                state.tweetsTranslations[tweetKey] = null;
+                state.echoosTranslations[echooKey] = null;
                 return SizedBox.shrink();
               }
-              state.tweetsTranslations[tweetKey] = snapshot.data!;
+              state.echoosTranslations[echooKey] = snapshot.data!;
 
               return _translation(snapshot.data!, context, textStyle, urlStyle);
             }

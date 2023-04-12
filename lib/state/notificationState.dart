@@ -16,7 +16,7 @@ import 'appState.dart';
 
 class NotificationState extends AppState {
   // String fcmToken;
-  // FeedModel notificationTweetModel;
+  // FeedModel notificationEchooModel;
 
   // FcmNotificationModel notification;
   // String notificationSenderId;
@@ -71,9 +71,9 @@ class NotificationState extends AppState {
         if (snapshot.value != null) {
           var map = snapshot.value as Map<dynamic, dynamic>?;
           if (map != null) {
-            map.forEach((tweetKey, value) {
+            map.forEach((echooKey, value) {
               var map = value as Map<dynamic, dynamic>;
-              var model = NotificationModel.fromJson(tweetKey, map);
+              var model = NotificationModel.fromJson(echooKey, map);
               addNotificationList(model);
             });
             _notificationList!
@@ -88,21 +88,21 @@ class NotificationState extends AppState {
     }
   }
 
-  /// get `Tweet` present in notification
-  Future<FeedModel?> getTweetDetail(String tweetId) async {
-    FeedModel _tweetDetail;
-    var event = await kDatabase.child('tweet').child(tweetId).once();
+  /// get `Echoo` present in notification
+  Future<FeedModel?> getEchooDetail(String echooId) async {
+    FeedModel _echooDetail;
+    var event = await kDatabase.child('echoo').child(echooId).once();
     if (event.snapshot.value != null) {
       var map = event.snapshot.value as Map<dynamic, dynamic>;
-      _tweetDetail = FeedModel.fromJson(map);
-      _tweetDetail.key = event.snapshot.key!;
-      return _tweetDetail;
+      _echooDetail = FeedModel.fromJson(map);
+      _echooDetail.key = event.snapshot.key!;
+      return _echooDetail;
     } else {
       return null;
     }
   }
 
-  /// get user who liked your tweet
+  /// get user who liked your echoo
   Future<UserModel?> getUserDetail(String userId) async {
     UserModel user;
     if (userList.isNotEmpty && userList.any((x) => x.userId == userId)) {
@@ -121,12 +121,12 @@ class NotificationState extends AppState {
     }
   }
 
-  /// Remove notification if related Tweet is not found or deleted
-  void removeNotification(String userId, String tweetkey) async {
-    kDatabase.child('notification').child(userId).child(tweetkey).remove();
+  /// Remove notification if related Echoo is not found or deleted
+  void removeNotification(String userId, String echookey) async {
+    kDatabase.child('notification').child(userId).child(echookey).remove();
   }
 
-  /// Trigger when somneone like your tweet
+  /// Trigger when somneone like your echoo
   void _onNotificationAdded(DatabaseEvent event) {
     if (event.snapshot.value != null) {
       var map = event.snapshot.value as Map<dynamic, dynamic>;
@@ -147,13 +147,13 @@ class NotificationState extends AppState {
     }
   }
 
-  /// Trigger when someone undo his like on tweet
+  /// Trigger when someone undo his like on echoo
   void _onNotificationRemoved(DatabaseEvent event) {
     if (event.snapshot.value != null) {
       var map = event.snapshot.value as Map<dynamic, dynamic>;
       var model = NotificationModel.fromJson(event.snapshot.key!, map);
       // remove notification from list
-      _notificationList!.removeWhere((x) => x.tweetKey == model.tweetKey);
+      _notificationList!.removeWhere((x) => x.echooKey == model.echooKey);
       notifyListeners();
       print("Notification Removed");
     }

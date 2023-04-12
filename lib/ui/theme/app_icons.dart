@@ -4,7 +4,7 @@ class AppIcon {
   AppIcon._();
 
   static const _kFontFam = 'TwitterIcon';
-  static const IconData fabTweet = IconData(0xf029, fontFamily: _kFontFam);
+  static const IconData fabEchoo = IconData(0xf029, fontFamily: _kFontFam);
   static const IconData messageEmpty = IconData(0xf187, fontFamily: _kFontFam);
   static const IconData messageFill = IconData(0xf554, fontFamily: _kFontFam);
   static const IconData search = IconData(0xf058, fontFamily: _kFontFam);
@@ -21,7 +21,7 @@ class AppIcon {
   static const IconData settings = IconData(0xf059, fontFamily: _kFontFam);
   static const IconData adTheRate = IconData(0xf064, fontFamily: _kFontFam);
   static const IconData reply = IconData(0xf151, fontFamily: _kFontFam);
-  static const IconData retweet = IconData(0xf152, fontFamily: _kFontFam);
+  static const IconData reechoo = IconData(0xf152, fontFamily: _kFontFam);
   static const IconData image = IconData(0xf109, fontFamily: _kFontFam);
   static const IconData camera = IconData(0xf110, fontFamily: _kFontFam);
   static const IconData arrowDown = IconData(0xf196, fontFamily: _kFontFam);

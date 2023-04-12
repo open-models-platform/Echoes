@@ -1,34 +1,35 @@
 import 'dart:io';
-import 'package:path/path.dart' as Path;
+
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/state/appState.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/state/appState.dart';
+import 'package:path/path.dart' as Path;
 
-class TweetBaseState extends AppState {
-  /// get [Tweet Detail] from firebase realtime kDatabase
-  /// If model is null then fetch tweet from firebase
-  /// [getPostDetailFromDatabase] is used to set prepare Tweet to display Tweet detail
-  /// After getting tweet detail fetch tweet comments from firebase
+class EchooBaseState extends AppState {
+  /// get [Echoo Detail] from firebase realtime kDatabase
+  /// If model is null then fetch echoo from firebase
+  /// [getPostDetailFromDatabase] is used to set prepare Echoo to display Echoo detail
+  /// After getting echoo detail fetch echoo comments from firebase
   Future<FeedModel?> getPostDetailFromDatabase(String postID) async {
     try {
-      late FeedModel tweet;
+      late FeedModel echoo;
 
-      // Fetch tweet data from firebase
+      // Fetch echoo data from firebase
       return await kDatabase
-          .child('tweet')
+          .child('echoo')
           .child(postID)
           .once()
           .then((DatabaseEvent event) {
         final snapshot = event.snapshot;
         if (snapshot.value != null) {
           var map = snapshot.value as Map;
-          tweet = FeedModel.fromJson(map);
-          tweet.key = snapshot.key!;
+          echoo = FeedModel.fromJson(map);
+          echoo.key = snapshot.key!;
         }
-        return tweet;
+        return echoo;
       });
     } catch (error) {
       cprint(error, errorIn: 'getPostDetailFromDatabase');
@@ -36,22 +37,22 @@ class TweetBaseState extends AppState {
     }
   }
 
-  Future<List<FeedModel>?> getTweetsComments(FeedModel post) async {
+  Future<List<FeedModel>?> getEchoosComments(FeedModel post) async {
     late List<FeedModel> _commentList;
-    // Check if parent tweet has reply tweets or not
-    if (post.replyTweetKeyList != null && post.replyTweetKeyList!.isNotEmpty) {
-      // for (String? x in post.replyTweetKeyList!) {
+    // Check if parent echoo has reply echoos or not
+    if (post.replyEchooKeyList != null && post.replyEchooKeyList!.isNotEmpty) {
+      // for (String? x in post.replyEchooKeyList!) {
       //   if (x == null) {
       //     return;
       //   }
       // }
       //FIXME
       _commentList = [];
-      for (String? replyTweetId in post.replyTweetKeyList!) {
-        if (replyTweetId != null) {
+      for (String? replyEchooId in post.replyEchooKeyList!) {
+        if (replyEchooId != null) {
           await kDatabase
-              .child('tweet')
-              .child(replyTweetId)
+              .child('echoo')
+              .child(replyEchooId)
               .once()
               .then((DatabaseEvent event) {
             final snapshot = event.snapshot;
@@ -60,15 +61,15 @@ class TweetBaseState extends AppState {
               var key = snapshot.key!;
               commentModel.key = key;
 
-              /// add comment tweet to list if tweet is not present in [comment tweet ]list
+              /// add comment echoo to list if echoo is not present in [comment echoo ]list
               /// To reduce delicacy
               if (!_commentList.any((x) => x.key == key)) {
                 _commentList.add(commentModel);
               }
             } else {}
-            if (replyTweetId == post.replyTweetKeyList!.last) {
+            if (replyEchooId == post.replyEchooKeyList!.last) {
               /// Sort comment by time
-              /// It helps to display newest Tweet first.
+              /// It helps to display newest Echoo first.
               _commentList.sort((x, y) => DateTime.parse(y.createdAt)
                   .compareTo(DateTime.parse(x.createdAt)));
             }
@@ -79,74 +80,74 @@ class TweetBaseState extends AppState {
     return _commentList;
   }
 
-  /// [Delete tweet] in Firebase kDatabase
-  /// Remove Tweet if present in home page Tweet list
-  /// Remove Tweet if present in Tweet detail page or in comment
-  bool deleteTweet(
-    String tweetId,
-    TweetType type,
+  /// [Delete echoo] in Firebase kDatabase
+  /// Remove Echoo if present in home page Echoo list
+  /// Remove Echoo if present in Echoo detail page or in comment
+  bool deleteEchoo(
+    String echooId,
+    EchooType type,
     /*{String parentkey}*/
   ) {
     try {
-      /// Delete tweet if it is in nested tweet detail page
-      kDatabase.child('tweet').child(tweetId).remove();
+      /// Delete echoo if it is in nested echoo detail page
+      kDatabase.child('echoo').child(echooId).remove();
       return true;
     } catch (error) {
-      cprint(error, errorIn: 'deleteTweet');
+      cprint(error, errorIn: 'deleteEchoo');
       return false;
     }
   }
 
-  /// [update] tweet
-  void updateTweet(FeedModel model) async {
-    await kDatabase.child('tweet').child(model.key!).set(model.toJson());
+  /// [update] echoo
+  void updateEchoo(FeedModel model) async {
+    await kDatabase.child('echoo').child(model.key!).set(model.toJson());
   }
 
-  /// Add/Remove like on a Tweet
-  /// [postId] is tweet id, [userId] is user's id who like/unlike Tweet
-  void addLikeToTweet(FeedModel tweet, String userId) {
+  /// Add/Remove like on a Echoo
+  /// [postId] is echoo id, [userId] is user's id who like/unlike Echoo
+  void addLikeToEchoo(FeedModel echoo, String userId) {
     try {
-      if (tweet.likeList != null &&
-          tweet.likeList!.isNotEmpty &&
-          tweet.likeList!.any((id) => id == userId)) {
-        // If user wants to undo/remove his like on tweet
-        tweet.likeList!.removeWhere((id) => id == userId);
-        tweet.likeCount = tweet.likeCount! - 1;
+      if (echoo.likeList != null &&
+          echoo.likeList!.isNotEmpty &&
+          echoo.likeList!.any((id) => id == userId)) {
+        // If user wants to undo/remove his like on echoo
+        echoo.likeList!.removeWhere((id) => id == userId);
+        echoo.likeCount = echoo.likeCount! - 1;
       } else {
-        // If user like Tweet
-        tweet.likeList ??= [];
-        tweet.likeList!.add(userId);
-        tweet.likeCount = tweet.likeCount! + 1;
+        // If user like Echoo
+        echoo.likeList ??= [];
+        echoo.likeList!.add(userId);
+        echoo.likeCount = echoo.likeCount! + 1;
       }
-      // update likeList of a tweet
+      // update likeList of a echoo
       kDatabase
-          .child('tweet')
-          .child(tweet.key!)
+          .child('echoo')
+          .child(echoo.key!)
           .child('likeList')
-          .set(tweet.likeList);
+          .set(echoo.likeList);
 
-      // Sends notification to user who created tweet
+      // Sends notification to user who created echoo
       // UserModel owner can see notification on notification page
       kDatabase
           .child('notification')
-          .child(tweet.userId)
-          .child(tweet.key!)
+          .child(echoo.userId)
+          .child(echoo.key!)
           .set({
         'type':
-            tweet.likeList!.isEmpty ? null : NotificationType.Like.toString(),
+            echoo.likeList!.isEmpty ? null : NotificationType.Like.toString(),
         'updatedAt':
-            tweet.likeList!.isEmpty ? null : DateTime.now().toUtc().toString(),
+            echoo.likeList!.isEmpty ? null : DateTime.now().toUtc().toString(),
       });
     } catch (error) {
-      cprint(error, errorIn: 'addLikeToTweet');
+      cprint(error, errorIn: 'addLikeToEchoo');
     }
   }
 
-  /// Add new [tweet]
-  /// Returns new tweet id
-  String? createPost(FeedModel tweet) {
-    var json = tweet.toJson();
-    var reference = kDatabase.child('tweet').push();
+  /// Add new [echoo]
+  /// Returns new echoo id
+  String? createPost(FeedModel echoo) {
+    var json = echoo.toJson();
+    var reference = kDatabase.child('echoo').push();
     reference.set(json);
     return reference.key;
   }
@@ -158,7 +159,7 @@ class TweetBaseState extends AppState {
       notifyListeners();
       var storageReference = FirebaseStorage.instance
           .ref()
-          .child("tweetImage")
+          .child("echooImage")
           .child(Path.basename(DateTime.now().toIso8601String() + file.path));
       await storageReference.putFile(file);
 

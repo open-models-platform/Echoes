@@ -1,38 +1,39 @@
 import 'dart:io';
+
+import 'package:Echoes/helper/constant.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/state/searchState.dart';
+import 'package:Echoes/ui/page/feed/composeEchoo/state/composeEchooState.dart';
+import 'package:Echoes/ui/page/feed/composeEchoo/widget/composeBottomIconWidget.dart';
+import 'package:Echoes/ui/page/feed/composeEchoo/widget/composeEchooImage.dart';
+import 'package:Echoes/ui/page/feed/composeEchoo/widget/widgetView.dart';
+import 'package:Echoes/ui/page/profile/widgets/circular_image.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customAppBar.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/newWidget/title_text.dart';
+import 'package:Echoes/widgets/url_text/customUrlText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_twitter_clone/helper/constant.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/ui/page/feed/composeTweet/state/composeTweetState.dart';
-import 'package:flutter_twitter_clone/ui/page/feed/composeTweet/widget/composeBottomIconWidget.dart';
-import 'package:flutter_twitter_clone/ui/page/feed/composeTweet/widget/composeTweetImage.dart';
-import 'package:flutter_twitter_clone/ui/page/feed/composeTweet/widget/widgetView.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/state/searchState.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/widgets/circular_image.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customAppBar.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/url_text/customUrlText.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/title_text.dart';
 import 'package:provider/provider.dart';
 import 'package:translator/translator.dart';
 
-class ComposeTweetPage extends StatefulWidget {
-  const ComposeTweetPage(
-      {Key? key, required this.isRetweet, this.isTweet = true})
+class ComposeEchooPage extends StatefulWidget {
+  const ComposeEchooPage(
+      {Key? key, required this.isReechoo, this.isEchoo = true})
       : super(key: key);
 
-  final bool isRetweet;
-  final bool isTweet;
+  final bool isReechoo;
+  final bool isEchoo;
   @override
-  _ComposeTweetReplyPageState createState() => _ComposeTweetReplyPageState();
+  _ComposeEchooReplyPageState createState() => _ComposeEchooReplyPageState();
 }
 
-class _ComposeTweetReplyPageState extends State<ComposeTweetPage> {
+class _ComposeEchooReplyPageState extends State<ComposeEchooPage> {
   bool isScrollingDown = false;
   late FeedModel? model;
   late ScrollController scrollController;
@@ -50,7 +51,7 @@ class _ComposeTweetReplyPageState extends State<ComposeTweetPage> {
   @override
   void initState() {
     var feedState = Provider.of<FeedState>(context, listen: false);
-    model = feedState.tweetToReplyModel;
+    model = feedState.echooToReplyModel;
     scrollController = ScrollController();
     _textEditingController = TextEditingController();
     scrollController.addListener(_scrollListener);
@@ -61,13 +62,13 @@ class _ComposeTweetReplyPageState extends State<ComposeTweetPage> {
     if (scrollController.position.userScrollDirection ==
         ScrollDirection.reverse) {
       if (!isScrollingDown) {
-        Provider.of<ComposeTweetState>(context, listen: false)
+        Provider.of<ComposeEchooState>(context, listen: false)
             .setIsScrollingDown = true;
       }
     }
     if (scrollController.position.userScrollDirection ==
         ScrollDirection.forward) {
-      Provider.of<ComposeTweetState>(context, listen: false)
+      Provider.of<ComposeEchooState>(context, listen: false)
           .setIsScrollingDown = false;
     }
   }
@@ -84,7 +85,7 @@ class _ComposeTweetReplyPageState extends State<ComposeTweetPage> {
     });
   }
 
-  /// Submit tweet to save in firebase database
+  /// Submit echoo to save in firebase database
   void _submitButton() async {
     if (_textEditingController.text.isEmpty ||
         _textEditingController.text.length > 280) {
@@ -93,61 +94,61 @@ class _ComposeTweetReplyPageState extends State<ComposeTweetPage> {
     var state = Provider.of<FeedState>(context, listen: false);
     kScreenLoader.showLoader(context);
 
-    FeedModel tweetModel = await createTweetModel();
-    String? tweetId;
+    FeedModel echooModel = await createEchooModel();
+    String? echooId;
 
-    /// If tweet contain image
+    /// If echoo contain image
     /// First image is uploaded on firebase storage
     /// After successful image upload to firebase storage it returns image path
-    /// Add this image path to tweet model and save to firebase database
+    /// Add this image path to echoo model and save to firebase database
     if (_image != null) {
       await state.uploadFile(_image!).then((imagePath) async {
         if (imagePath != null) {
-          tweetModel.imagePath = imagePath;
+          echooModel.imagePath = imagePath;
 
-          /// If type of tweet is new tweet
-          if (widget.isTweet) {
-            tweetId = await state.createTweet(tweetModel);
+          /// If type of echoo is new echoo
+          if (widget.isEchoo) {
+            echooId = await state.createEchoo(echooModel);
           }
 
-          /// If type of tweet is  retweet
-          else if (widget.isRetweet) {
-            tweetId = await state.createReTweet(tweetModel);
+          /// If type of echoo is  reechoo
+          else if (widget.isReechoo) {
+            echooId = await state.createReEchoo(echooModel);
           }
 
-          /// If type of tweet is new comment tweet
+          /// If type of echoo is new comment echoo
           else {
-            tweetId = await state.addCommentToPost(tweetModel);
+            echooId = await state.addCommentToPost(echooModel);
           }
         }
       });
     }
 
-    /// If tweet did not contain image
+    /// If echoo did not contain image
     else {
-      /// If type of tweet is new tweet
-      if (widget.isTweet) {
-        tweetId = await state.createTweet(tweetModel);
+      /// If type of echoo is new echoo
+      if (widget.isEchoo) {
+        echooId = await state.createEchoo(echooModel);
       }
 
-      /// If type of tweet is  retweet
-      else if (widget.isRetweet) {
-        tweetId = await state.createReTweet(tweetModel);
+      /// If type of echoo is  reechoo
+      else if (widget.isReechoo) {
+        echooId = await state.createReEchoo(echooModel);
       }
 
-      /// If type of tweet is new comment tweet
+      /// If type of echoo is new comment echoo
       else {
-        tweetId = await state.addCommentToPost(tweetModel);
+        echooId = await state.addCommentToPost(echooModel);
       }
     }
-    tweetModel.key = tweetId;
+    echooModel.key = echooId;
 
-    /// Checks for username in tweet description
+    /// Checks for username in echoo description
     /// If username found, sends notification to all tagged user
-    /// If no user found, compose tweet screen is closed and redirect back to home page.
-    await Provider.of<ComposeTweetState>(context, listen: false)
+    /// If no user found, compose echoo screen is closed and redirect back to home page.
+    await Provider.of<ComposeEchooState>(context, listen: false)
         .sendNotification(
-            tweetModel, Provider.of<SearchState>(context, listen: false))
+            echooModel, Provider.of<SearchState>(context, listen: false))
         .then((_) {
       /// Hide running loader on screen
       kScreenLoader.hideLoader();
@@ -157,17 +158,17 @@ class _ComposeTweetReplyPageState extends State<ComposeTweetPage> {
     });
   }
 
-  /// Return Tweet model which is either a new Tweet , retweet model or comment model
-  /// If tweet is new tweet then `parentkey` and `childRetwetkey` should be null
-  /// IF tweet is a comment then it should have `parentkey`
-  /// IF tweet is a retweet then it should have `childRetwetkey`
-  Future<FeedModel> createTweetModel() async {
+  /// Return Echoo model which is either a new Echoo , reechoo model or comment model
+  /// If echoo is new echoo then `parentkey` and `childRetwetkey` should be null
+  /// IF echoo is a comment then it should have `parentkey`
+  /// IF echoo is a reechoo then it should have `childRetwetkey`
+  Future<FeedModel> createEchooModel() async {
     var state = Provider.of<FeedState>(context, listen: false);
     var authState = Provider.of<AuthState>(context, listen: false);
     var myUser = authState.userModel;
     var profilePic = myUser!.profilePic ?? Constants.dummyProfilePic;
 
-    /// User who are creating reply tweet
+    /// User who are creating reply echoo
     var commentedUser = UserModel(
         displayName: myUser.displayName ?? myUser.email!.split('@')[0],
         profilePic: profilePic,
@@ -184,14 +185,14 @@ class _ComposeTweetReplyPageState extends State<ComposeTweetPage> {
         user: commentedUser,
         createdAt: DateTime.now().toUtc().toString(),
         tags: tags,
-        parentkey: widget.isTweet
+        parentkey: widget.isEchoo
             ? null
-            : widget.isRetweet
+            : widget.isReechoo
                 ? null
-                : state.tweetToReplyModel!.key,
-        childRetwetkey: widget.isTweet
+                : state.echooToReplyModel!.key,
+        childRetwetkey: widget.isEchoo
             ? null
-            : widget.isRetweet
+            : widget.isReechoo
                 ? model!.key
                 : null,
         userId: myUser.userId!);
@@ -205,15 +206,15 @@ class _ComposeTweetReplyPageState extends State<ComposeTweetPage> {
         title: customTitleText(''),
         onActionPressed: _submitButton,
         isCrossButton: true,
-        submitButtonText: widget.isTweet
-            ? 'Tweet'
-            : widget.isRetweet
-                ? 'Retweet'
+        submitButtonText: widget.isEchoo
+            ? 'Echoo'
+            : widget.isReechoo
+                ? 'Reechoo'
                 : 'Reply',
         isSubmitDisable:
-            !Provider.of<ComposeTweetState>(context).enableSubmitButton ||
+            !Provider.of<ComposeEchooState>(context).enableSubmitButton ||
                 Provider.of<FeedState>(context).isBusy,
-        isBottomLine: Provider.of<ComposeTweetState>(context).isScrollingDown,
+        isBottomLine: Provider.of<ComposeEchooState>(context).isScrollingDown,
       ),
       backgroundColor: Theme.of(context).backgroundColor,
       body: Stack(
@@ -222,7 +223,7 @@ class _ComposeTweetReplyPageState extends State<ComposeTweetPage> {
           SingleChildScrollView(
             controller: scrollController,
             child:
-                widget.isRetweet ? _ComposeRetweet(this) : _ComposeTweet(this),
+                widget.isReechoo ? _ComposeReechoo(this) : _ComposeEchoo(this),
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -237,12 +238,12 @@ class _ComposeTweetReplyPageState extends State<ComposeTweetPage> {
   }
 }
 
-class _ComposeRetweet
-    extends WidgetView<ComposeTweetPage, _ComposeTweetReplyPageState> {
-  const _ComposeRetweet(this.viewState) : super(viewState);
+class _ComposeReechoo
+    extends WidgetView<ComposeEchooPage, _ComposeEchooReplyPageState> {
+  const _ComposeReechoo(this.viewState) : super(viewState);
 
-  final _ComposeTweetReplyPageState viewState;
-  Widget _tweet(BuildContext context, FeedModel model) {
+  final _ComposeEchooReplyPageState viewState;
+  Widget _echoo(BuildContext context, FeedModel model) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -333,8 +334,8 @@ class _ComposeRetweet
               ),
               Expanded(
                 child: _TextField(
-                  isTweet: false,
-                  isRetweet: true,
+                  isEchoo: false,
+                  isReechoo: true,
                   textEditingController: viewState._textEditingController,
                 ),
               ),
@@ -345,7 +346,7 @@ class _ComposeRetweet
           ),
           Padding(
             padding: const EdgeInsets.only(right: 16, left: 80, bottom: 8),
-            child: ComposeTweetImage(
+            child: ComposeEchooImage(
               image: viewState._image,
               onCrossIconPressed: viewState._onCrossIconPressed,
             ),
@@ -365,7 +366,7 @@ class _ComposeRetweet
                               color: AppColor.extraLightGrey, width: .5),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(15))),
-                      child: _tweet(context, viewState.model!),
+                      child: _echoo(context, viewState.model!),
                     ),
                   ],
                 ),
@@ -383,13 +384,13 @@ class _ComposeRetweet
   }
 }
 
-class _ComposeTweet
-    extends WidgetView<ComposeTweetPage, _ComposeTweetReplyPageState> {
-  const _ComposeTweet(this.viewState) : super(viewState);
+class _ComposeEchoo
+    extends WidgetView<ComposeEchooPage, _ComposeEchooReplyPageState> {
+  const _ComposeEchoo(this.viewState) : super(viewState);
 
-  final _ComposeTweetReplyPageState viewState;
+  final _ComposeEchooReplyPageState viewState;
 
-  Widget _tweetCard(BuildContext context) {
+  Widget _echooCard(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -491,9 +492,9 @@ class _ComposeTweet
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          viewState.widget.isTweet
+          viewState.widget.isEchoo
               ? const SizedBox.shrink()
-              : _tweetCard(context),
+              : _echooCard(context),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -503,7 +504,7 @@ class _ComposeTweet
               ),
               Expanded(
                 child: _TextField(
-                  isTweet: widget.isTweet,
+                  isEchoo: widget.isEchoo,
                   textEditingController: viewState._textEditingController,
                 ),
               )
@@ -512,7 +513,7 @@ class _ComposeTweet
           Flexible(
             child: Stack(
               children: <Widget>[
-                ComposeTweetImage(
+                ComposeEchooImage(
                   image: viewState._image,
                   onCrossIconPressed: viewState._onCrossIconPressed,
                 ),
@@ -533,12 +534,12 @@ class _TextField extends StatelessWidget {
   const _TextField(
       {Key? key,
       required this.textEditingController,
-      this.isTweet = false,
-      this.isRetweet = false})
+      this.isEchoo = false,
+      this.isReechoo = false})
       : super(key: key);
   final TextEditingController textEditingController;
-  final bool isTweet;
-  final bool isRetweet;
+  final bool isEchoo;
+  final bool isReechoo;
 
   @override
   Widget build(BuildContext context) {
@@ -549,17 +550,17 @@ class _TextField extends StatelessWidget {
         TextField(
           controller: textEditingController,
           onChanged: (text) {
-            Provider.of<ComposeTweetState>(context, listen: false)
+            Provider.of<ComposeEchooState>(context, listen: false)
                 .onDescriptionChanged(text, searchState);
           },
           maxLines: null,
           decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: isTweet
+              hintText: isEchoo
                   ? 'What\'s happening?'
-                  : isRetweet
+                  : isReechoo
                       ? 'Add a comment'
-                      : 'Tweet your reply',
+                      : 'Echoo your reply',
               hintStyle: const TextStyle(fontSize: 18)),
         ),
       ],
@@ -575,7 +576,7 @@ class _UserList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return !Provider.of<ComposeTweetState>(context).displayUserList ||
+    return !Provider.of<ComposeEchooState>(context).displayUserList ||
             list == null ||
             list!.length < 0 ||
             list!.isEmpty
@@ -593,12 +594,12 @@ class _UserList extends StatelessWidget {
                   user: list![index],
                   onUserSelected: (user) {
                     textEditingController.text =
-                        Provider.of<ComposeTweetState>(context, listen: false)
+                        Provider.of<ComposeEchooState>(context, listen: false)
                                 .getDescription(user.userName!) +
                             " ";
                     textEditingController.selection = TextSelection.collapsed(
                         offset: textEditingController.text.length);
-                    Provider.of<ComposeTweetState>(context, listen: false)
+                    Provider.of<ComposeEchooState>(context, listen: false)
                         .onUserSelected();
                   },
                 );

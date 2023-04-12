@@ -1,11 +1,12 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
 
-class ComposeTweetImage extends StatelessWidget {
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:flutter/material.dart';
+
+class ComposeEchooImage extends StatelessWidget {
   final File? image;
   final VoidCallback onCrossIconPressed;
-  const ComposeTweetImage(
+  const ComposeEchooImage(
       {Key? key, this.image, required this.onCrossIconPressed})
       : super(key: key);
   @override

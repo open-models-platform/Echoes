@@ -1,7 +1,8 @@
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/user.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
+
 import 'appState.dart';
 
 class SearchState extends AppState {

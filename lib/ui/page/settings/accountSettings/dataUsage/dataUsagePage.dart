@@ -1,10 +1,10 @@
+import 'package:Echoes/ui/page/settings/widgets/headerWidget.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsRowWidget.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customAppBar.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/newWidget/title_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/headerWidget.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsRowWidget.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customAppBar.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/title_text.dart';
 
 class DataUsagePage extends StatelessWidget {
   const DataUsagePage({Key? key}) : super(key: key);
@@ -124,7 +124,7 @@ class DataUsagePage extends StatelessWidget {
             vPadding: 15,
             showDivider: false,
             subtitle:
-                'When enabled, video won\'t autoplay and lower-quality images load. This automatically reduces your data usage for all Fwitter accounts on this device.',
+                'When enabled, video won\'t autoplay and lower-quality images load. This automatically reduces your data usage for all Echooes accounts on this device.',
             visibleSwitch: null,
           ),
           const Divider(height: 0),
@@ -185,7 +185,7 @@ class DataUsagePage extends StatelessWidget {
           const SettingRowWidget(
             null,
             subtitle:
-                'Allow Fwitter to sync data in the background to enhance your experience.',
+                'Allow Echooes to sync data in the background to enhance your experience.',
             vPadding: 10,
             showCheckBox: null,
             visibleSwitch: null,

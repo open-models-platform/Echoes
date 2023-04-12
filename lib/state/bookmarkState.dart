@@ -1,21 +1,22 @@
 import 'dart:async';
 
+import 'package:Echoes/helper/shared_prefrence_helper.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/bookmarkModel.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/ui/page/common/locator.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter_twitter_clone/helper/shared_prefrence_helper.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/bookmarkModel.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/ui/page/common/locator.dart';
+
 import 'appState.dart';
 
 class BookmarkState extends AppState {
   BookmarkState() {
     getDataFromDatabase();
   }
-  List<FeedModel>? _tweetList;
+  List<FeedModel>? _echooList;
   List<BookmarkModel>? _bookmarkList;
 
-  addBookmarkTweetToList(BookmarkModel model) {
+  addBookmarkEchooToList(BookmarkModel model) {
     _bookmarkList ??= <BookmarkModel>[];
 
     if (!_bookmarkList!.any((element) => element.key == model.key)) {
@@ -23,7 +24,7 @@ class BookmarkState extends AppState {
     }
   }
 
-  List<FeedModel>? get tweetList => _tweetList;
+  List<FeedModel>? get echooList => _echooList;
 
   /// get [Notification list] from firebase realtime database
   void getDataFromDatabase() async {
@@ -31,7 +32,7 @@ class BookmarkState extends AppState {
         .getUserProfile()
         .then((value) => value!.userId!);
     try {
-      if (_tweetList != null) {
+      if (_echooList != null) {
         return;
       }
       isBusy = true;
@@ -48,16 +49,16 @@ class BookmarkState extends AppState {
               var map = value as Map<dynamic, dynamic>;
               var model = BookmarkModel.fromJson(map);
               model.key = bookmarkKey;
-              addBookmarkTweetToList(model);
+              addBookmarkEchooToList(model);
             });
           }
 
           if (_bookmarkList != null) {
             for (var bookmark in _bookmarkList!) {
-              var tweet = await getTweetDetail(bookmark.tweetId);
-              if (tweet != null) {
-                _tweetList ??= <FeedModel>[];
-                _tweetList!.add(tweet);
+              var echoo = await getEchooDetail(bookmark.echooId);
+              if (echoo != null) {
+                _echooList ??= <FeedModel>[];
+                _echooList!.add(echoo);
               }
             }
           }
@@ -70,17 +71,17 @@ class BookmarkState extends AppState {
     }
   }
 
-  /// get `Tweet` present in notification
-  Future<FeedModel?> getTweetDetail(String tweetId) async {
-    FeedModel _tweetDetail;
-    final event = await kDatabase.child('tweet').child(tweetId).once();
+  /// get `Echoo` present in notification
+  Future<FeedModel?> getEchooDetail(String echooId) async {
+    FeedModel _echooDetail;
+    final event = await kDatabase.child('echoo').child(echooId).once();
 
     final snapshot = event.snapshot;
     if (snapshot.value != null) {
       var map = snapshot.value as Map<dynamic, dynamic>;
-      _tweetDetail = FeedModel.fromJson(map);
-      _tweetDetail.key = snapshot.key!;
-      return _tweetDetail;
+      _echooDetail = FeedModel.fromJson(map);
+      _echooDetail.key = snapshot.key!;
+      return _echooDetail;
     } else {
       return null;
     }

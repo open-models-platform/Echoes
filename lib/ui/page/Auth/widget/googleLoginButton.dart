@@ -1,11 +1,10 @@
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/widgets/newWidget/customLoader.dart';
+import 'package:Echoes/widgets/newWidget/rippleButton.dart';
+import 'package:Echoes/widgets/newWidget/title_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/customLoader.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/rippleButton.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/title_text.dart';
 
 class GoogleLoginButton extends StatelessWidget {
   const GoogleLoginButton({

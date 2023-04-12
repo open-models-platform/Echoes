@@ -1,8 +1,8 @@
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/ui/theme/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
 import 'package:link_preview_generator/link_preview_generator.dart';
 // ignore: implementation_imports
 import 'package:link_preview_generator/src/utils/analyzer.dart'

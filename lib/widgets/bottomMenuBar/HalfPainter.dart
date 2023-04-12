@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart';
-import 'dart:io';
 
 class HalfPainter extends CustomPainter {
   HalfPainter(Color paintColor) {

@@ -1,19 +1,19 @@
+import 'package:Echoes/helper/constant.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/chatModel.dart';
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/state/chats/chatState.dart';
+import 'package:Echoes/state/searchState.dart';
+import 'package:Echoes/ui/page/profile/profilePage.dart';
+import 'package:Echoes/ui/page/profile/widgets/circular_image.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customAppBar.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/newWidget/emptyList.dart';
+import 'package:Echoes/widgets/newWidget/rippleButton.dart';
+import 'package:Echoes/widgets/newWidget/title_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/constant.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/chatModel.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/state/chats/chatState.dart';
-import 'package:flutter_twitter_clone/state/searchState.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/profilePage.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/widgets/circular_image.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customAppBar.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/emptyList.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/rippleButton.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/title_text.dart';
 import 'package:provider/provider.dart';
 
 class ChatListPage extends StatefulWidget {

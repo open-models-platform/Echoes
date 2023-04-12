@@ -1,21 +1,21 @@
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/ui/page/feed/feedPostDetail.dart';
+import 'package:Echoes/ui/page/profile/widgets/circular_image.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/echoo/widgets/echooImage.dart';
+import 'package:Echoes/widgets/echoo/widgets/unavailableEchoo.dart';
+import 'package:Echoes/widgets/newWidget/rippleButton.dart';
+import 'package:Echoes/widgets/newWidget/title_text.dart';
+import 'package:Echoes/widgets/url_text/customUrlText.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/ui/page/feed/feedPostDetail.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/widgets/circular_image.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/rippleButton.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/title_text.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/widgets/tweetImage.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/widgets/unavailableTweet.dart';
-import 'package:flutter_twitter_clone/widgets/url_text/customUrlText.dart';
 import 'package:provider/provider.dart';
 
-class RetweetWidget extends StatelessWidget {
-  const RetweetWidget(
+class ReechooWidget extends StatelessWidget {
+  const ReechooWidget(
       {Key? key,
       required this.childRetwetkey,
       required this.type,
@@ -24,9 +24,9 @@ class RetweetWidget extends StatelessWidget {
 
   final String childRetwetkey;
   final bool isImageAvailable;
-  final TweetType type;
+  final EchooType type;
 
-  Widget _tweet(BuildContext context, FeedModel model) {
+  Widget _echoo(BuildContext context, FeedModel model) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -98,7 +98,7 @@ class RetweetWidget extends StatelessWidget {
                 ),
               ),
         SizedBox(height: model.imagePath == null ? 8 : 0),
-        TweetImage(model: model, type: type, isRetweetImage: true),
+        EchooImage(model: model, type: type, isReechooImage: true),
       ],
     );
   }
@@ -107,12 +107,12 @@ class RetweetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var feedstate = Provider.of<FeedState>(context, listen: false);
     return FutureBuilder(
-      future: feedstate.fetchTweet(childRetwetkey),
+      future: feedstate.fetchEchoo(childRetwetkey),
       builder: (context, AsyncSnapshot<FeedModel?> snapshot) {
         if (snapshot.hasData) {
           return Container(
             margin: EdgeInsets.only(
-                left: type == TweetType.Tweet || type == TweetType.ParentTweet
+                left: type == EchooType.Echoo || type == EchooType.ParentEchoo
                     ? 70
                     : 12,
                 right: 16,
@@ -132,7 +132,7 @@ class RetweetWidget extends StatelessWidget {
               },
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
-                child: _tweet(context, snapshot.data!),
+                child: _echoo(context, snapshot.data!),
               ),
             ),
           );
@@ -140,7 +140,7 @@ class RetweetWidget extends StatelessWidget {
         if ((snapshot.connectionState == ConnectionState.done ||
                 snapshot.connectionState == ConnectionState.waiting) &&
             !snapshot.hasData) {
-          return UnavailableTweet(
+          return UnavailableEchoo(
             snapshot: snapshot,
             type: type,
           );

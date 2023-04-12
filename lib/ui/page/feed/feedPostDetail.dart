@@ -1,13 +1,13 @@
+import 'package:Echoes/helper/customRoute.dart';
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/echoo/echoo.dart';
+import 'package:Echoes/widgets/echoo/widgets/echooBottomSheet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/customRoute.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/tweet.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/widgets/tweetBottomSheet.dart';
 import 'package:provider/provider.dart';
 
 class FeedPostDetail extends StatefulWidget {
@@ -41,29 +41,29 @@ class _FeedPostDetailState extends State<FeedPostDetail> {
     return FloatingActionButton(
       onPressed: () {
         var state = Provider.of<FeedState>(context, listen: false);
-        state.setTweetToReply = state.tweetDetailModel!.last;
-        Navigator.of(context).pushNamed('/ComposeTweetPage/' + postId);
+        state.setEchooToReply = state.echooDetailModel!.last;
+        Navigator.of(context).pushNamed('/ComposeEchooPage/' + postId);
       },
       child: const Icon(Icons.add),
     );
   }
 
   Widget _commentRow(FeedModel model) {
-    return Tweet(
+    return Echoo(
       model: model,
-      type: TweetType.Reply,
-      trailing: TweetBottomSheet().tweetOptionIcon(context,
-          scaffoldKey: scaffoldKey, model: model, type: TweetType.Reply),
+      type: EchooType.Reply,
+      trailing: EchooBottomSheet().echooOptionIcon(context,
+          scaffoldKey: scaffoldKey, model: model, type: EchooType.Reply),
       scaffoldKey: scaffoldKey,
     );
   }
 
-  Widget _tweetDetail(FeedModel model) {
-    return Tweet(
+  Widget _echooDetail(FeedModel model) {
+    return Echoo(
       model: model,
-      type: TweetType.Detail,
-      trailing: TweetBottomSheet().tweetOptionIcon(context,
-          scaffoldKey: scaffoldKey, model: model, type: TweetType.Detail),
+      type: EchooType.Detail,
+      trailing: EchooBottomSheet().echooOptionIcon(context,
+          scaffoldKey: scaffoldKey, model: model, type: EchooType.Detail),
       scaffoldKey: scaffoldKey,
     );
   }
@@ -71,19 +71,19 @@ class _FeedPostDetailState extends State<FeedPostDetail> {
   void addLikeToComment(String commentId) {
     var state = Provider.of<FeedState>(context, listen: false);
     var authState = Provider.of<AuthState>(context, listen: false);
-    state.addLikeToTweet(state.tweetDetailModel!.last, authState.userId);
+    state.addLikeToEchoo(state.echooDetailModel!.last, authState.userId);
   }
 
   void openImage() async {
     Navigator.pushNamed(context, '/ImageViewPge');
   }
 
-  void deleteTweet(TweetType type, String tweetId,
+  void deleteEchoo(EchooType type, String echooId,
       {required String parentkey}) {
     var state = Provider.of<FeedState>(context, listen: false);
-    state.deleteTweet(tweetId, type, parentkey: parentkey);
+    state.deleteEchoo(echooId, type, parentkey: parentkey);
     Navigator.of(context).pop();
-    if (type == TweetType.Detail) Navigator.of(context).pop();
+    if (type == EchooType.Detail) Navigator.of(context).pop();
   }
 
   @override
@@ -92,7 +92,7 @@ class _FeedPostDetailState extends State<FeedPostDetail> {
     return WillPopScope(
       onWillPop: () async {
         Provider.of<FeedState>(context, listen: false)
-            .removeLastTweetDetail(postId);
+            .removeLastEchooDetail(postId);
         return Future.value(true);
       },
       child: Scaffold(
@@ -119,10 +119,10 @@ class _FeedPostDetailState extends State<FeedPostDetail> {
             SliverList(
               delegate: SliverChildListDelegate(
                 [
-                  state.tweetDetailModel == null ||
-                          state.tweetDetailModel!.isEmpty
+                  state.echooDetailModel == null ||
+                          state.echooDetailModel!.isEmpty
                       ? Container()
-                      : _tweetDetail(state.tweetDetailModel!.last),
+                      : _echooDetail(state.echooDetailModel!.last),
                   Container(
                     height: 6,
                     width: context.width,
@@ -133,16 +133,16 @@ class _FeedPostDetailState extends State<FeedPostDetail> {
             ),
             SliverList(
               delegate: SliverChildListDelegate(
-                state.tweetReplyMap == null ||
-                        state.tweetReplyMap!.isEmpty ||
-                        state.tweetReplyMap![postId] == null
+                state.echooReplyMap == null ||
+                        state.echooReplyMap!.isEmpty ||
+                        state.echooReplyMap![postId] == null
                     ? [
                         //!Removed container
                         const Center(
                             //  child: Text('No comments'),
                             )
                       ]
-                    : state.tweetReplyMap![postId]!
+                    : state.echooReplyMap![postId]!
                         .map((x) => _commentRow(x))
                         .toList(),
               ),

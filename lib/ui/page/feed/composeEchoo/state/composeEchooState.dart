@@ -1,14 +1,15 @@
 import 'dart:convert';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:http/http.dart' as http;
+
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/searchState.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/state/searchState.dart';
+import 'package:http/http.dart' as http;
 
-class ComposeTweetState extends ChangeNotifier {
+class ComposeEchooState extends ChangeNotifier {
   bool showUserList = false;
   bool enableSubmitButton = false;
   bool hideUserList = false;
@@ -43,12 +44,12 @@ class ComposeTweetState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// This method will trigger every time when user writes tweet description.
+  /// This method will trigger every time when user writes echoo description.
   /// `hideUserList` is set to false to reset user list show flag.
   /// If description is not empty and its length is lesser then 280 characters
   /// then value of `enableSubmitButton` is set to true.
   ///
-  /// `enableSubmitButton` is responsible to enable/disable tweet submit button
+  /// `enableSubmitButton` is responsible to enable/disable echoo submit button
   void onDescriptionChanged(String text, SearchState searchState) {
     description = text;
     hideUserList = false;
@@ -109,7 +110,7 @@ class ComposeTweetState extends ChangeNotifier {
   ///  {
   ///    "key": "FCM server key here"
   ///  } ```
-  /// For more detail visit:- https://github.com/TheAlphamerc/flutter_twitter_clone/issues/28#issue-611695533
+  /// For more detail visit:- https://github.com/open-models-platform/Echoes/issues/28#issue-611695533
   /// For package detail check:-  https://pub.dev/packages/firebase_remote_config#-readme-tab-
   Future<void> getFCMServerKey() async {
     /// If FCM server key is already fetched then no need to fetch it again.
@@ -174,7 +175,7 @@ class ComposeTweetState extends ChangeNotifier {
     var body = jsonEncode(<String, dynamic>{
       'notification': <String, dynamic>{
         'body': model.description,
-        'title': "${model.user!.displayName} mentioned you in a tweet"
+        'title': "${model.user!.displayName} mentioned you in a echoo"
       },
       'priority': 'high',
       'data': <String, dynamic>{
@@ -186,7 +187,7 @@ class ComposeTweetState extends ChangeNotifier {
         "receiverId": user.userId,
         "title": "title",
         "body": "",
-        "tweetId": model.key
+        "echooId": model.key
       },
       'to': user.fcmToken
     });

@@ -1,10 +1,10 @@
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/ui/page/settings/widgets/headerWidget.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customAppBar.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/headerWidget.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customAppBar.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
 import 'package:provider/provider.dart';
 
 import 'widgets/settingsRowWidget.dart';
@@ -48,7 +48,7 @@ class SettingsAndPrivacyPage extends StatelessWidget {
               navigateTo: 'AccessibilityPage'),
           const SettingRowWidget("Proxy", navigateTo: "ProxyPage"),
           const SettingRowWidget(
-            "About Fwitter",
+            "About Echooes",
             navigateTo: "AboutPage",
           ),
           const SettingRowWidget(
@@ -56,7 +56,7 @@ class SettingsAndPrivacyPage extends StatelessWidget {
             showDivider: false,
             vPadding: 10,
             subtitle:
-                'These settings affect all of your Fwitter accounts on this devce.',
+                'These settings affect all of your Echooes accounts on this devce.',
           )
         ],
       ),

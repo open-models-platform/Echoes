@@ -1,8 +1,8 @@
 // import 'package:fancy_bottom_navigation/internal/tab_item.dart';
+import 'package:Echoes/state/appState.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/bottomMenuBar/tabItem.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/state/appState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/bottomMenuBar/tabItem.dart';
 import 'package:provider/provider.dart';
 
 import '../customWidgets.dart';

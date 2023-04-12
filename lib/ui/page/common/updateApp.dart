@@ -1,9 +1,9 @@
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/ui/page/common/splash.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customFlatButton.dart';
+import 'package:Echoes/widgets/newWidget/title_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/ui/page/common/splash.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customFlatButton.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/title_text.dart';
 
 class UpdateApp extends StatefulWidget {
   const UpdateApp({Key? key}) : super(key: key);
@@ -69,7 +69,7 @@ class _UpdateAppState extends State<UpdateApp> with WidgetsBindingObserver {
                 label: "Update now",
                 onPressed: () {
                   Utility.launchURL(
-                      "https://play.google.com/store/apps/details?id=com.thealphamerc.flutter_twitter_clone");
+                      "https://play.google.com/store/apps/details?id=com.thealphamerc.Echoes");
                 },
                 borderRadius: 30,
               ),

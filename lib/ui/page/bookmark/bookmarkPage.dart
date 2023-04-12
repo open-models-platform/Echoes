@@ -1,11 +1,11 @@
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/state/bookmarkState.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customAppBar.dart';
+import 'package:Echoes/widgets/echoo/echoo.dart';
+import 'package:Echoes/widgets/newWidget/emptyList.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/state/bookmarkState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customAppBar.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/emptyList.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/tweet.dart';
 import 'package:provider/provider.dart';
 
 class BookmarkPage extends StatelessWidget {
@@ -41,12 +41,12 @@ class BookmarkPage extends StatelessWidget {
 class BookmarkPageBody extends StatelessWidget {
   const BookmarkPageBody({Key? key}) : super(key: key);
 
-  Widget _tweet(BuildContext context, FeedModel model) {
+  Widget _echoo(BuildContext context, FeedModel model) {
     return Container(
       color: Colors.white,
-      child: Tweet(
+      child: Echoo(
         model: model,
-        type: TweetType.Tweet,
+        type: EchooType.Echoo,
         scaffoldKey: GlobalKey<ScaffoldState>(),
       ),
     );
@@ -55,7 +55,7 @@ class BookmarkPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var state = Provider.of<BookmarkState>(context);
-    var list = state.tweetList;
+    var list = state.echooList;
     if (state.isbusy) {
       return const SizedBox(
         height: 3,
@@ -72,7 +72,7 @@ class BookmarkPageBody extends StatelessWidget {
     }
     return ListView.builder(
       addAutomaticKeepAlives: true,
-      itemBuilder: (context, index) => _tweet(context, list[index]),
+      itemBuilder: (context, index) => _echoo(context, list[index]),
       itemCount: list.length,
     );
   }

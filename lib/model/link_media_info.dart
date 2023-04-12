@@ -43,16 +43,12 @@ class LinkMediaInfo extends Equatable {
   factory LinkMediaInfo.fromJson(Map<String, dynamic> json) => LinkMediaInfo(
         type: json["type"],
         providerUrl: json["provider_url"],
-        thumbnailHeight:
-            json["thumbnail_height"],
+        thumbnailHeight: json["thumbnail_height"],
         authorUrl: json["author_url"],
-        thumbnailWidth:
-            json["thumbnail_width"],
+        thumbnailWidth: json["thumbnail_width"],
         height: json["height"],
-        thumbnailUrl:
-            json["thumbnail_url"],
-        providerName:
-            json["provider_name"],
+        thumbnailUrl: json["thumbnail_url"],
+        providerName: json["provider_name"],
         width: json["width"],
         title: json["title"],
         url: json["url"],
@@ -79,13 +75,6 @@ class LinkMediaInfo extends Equatable {
       };
 
   @override
-  List<Object?> get props => [
-        type,
-        url,
-        providerName,
-        width,
-        title,
-        thumbnailHeight,
-        height
-      ];
+  List<Object?> get props =>
+      [type, url, providerName, width, title, thumbnailHeight, height];
 }

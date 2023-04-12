@@ -1,11 +1,11 @@
+import 'package:Echoes/model/notificationModel.dart';
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/ui/page/profile/profilePage.dart';
+import 'package:Echoes/ui/page/profile/widgets/circular_image.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/url_text/customUrlText.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/model/notificationModel.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/profilePage.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/widgets/circular_image.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/url_text/customUrlText.dart';
 
 class FollowNotificationTile extends StatelessWidget {
   final NotificationModel model;

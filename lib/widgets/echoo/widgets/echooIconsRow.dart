@@ -1,31 +1,31 @@
+import 'package:Echoes/helper/customRoute.dart';
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/ui/page/common/usersListPage.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/echoo/widgets/echooBottomSheet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/customRoute.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/ui/page/common/usersListPage.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/widgets/tweetBottomSheet.dart';
 import 'package:provider/provider.dart';
 
-class TweetIconsRow extends StatelessWidget {
+class EchooIconsRow extends StatelessWidget {
   final FeedModel model;
   final Color iconColor;
   final Color iconEnableColor;
   final double? size;
-  final bool isTweetDetail;
-  final TweetType? type;
+  final bool isEchooDetail;
+  final EchooType? type;
   final GlobalKey<ScaffoldState> scaffoldKey;
-  const TweetIconsRow(
+  const EchooIconsRow(
       {Key? key,
       required this.model,
       required this.iconColor,
       required this.iconEnableColor,
       this.size,
-      this.isTweetDetail = false,
+      this.isEchooDetail = false,
       this.type,
       required this.scaffoldKey})
       : super(key: key);
@@ -44,32 +44,32 @@ class TweetIconsRow extends StatelessWidget {
           ),
           _iconWidget(
             context,
-            text: isTweetDetail ? '' : model.commentCount.toString(),
+            text: isEchooDetail ? '' : model.commentCount.toString(),
             icon: AppIcon.reply,
             iconColor: iconColor,
             size: size ?? 20,
             onPressed: () {
               var state = Provider.of<FeedState>(context, listen: false);
-              state.setTweetToReply = model;
-              Navigator.of(context).pushNamed('/ComposeTweetPage');
+              state.setEchooToReply = model;
+              Navigator.of(context).pushNamed('/ComposeEchooPage');
             },
           ),
           _iconWidget(context,
-              text: isTweetDetail ? '' : model.retweetCount.toString(),
-              icon: AppIcon.retweet,
+              text: isEchooDetail ? '' : model.reechooCount.toString(),
+              icon: AppIcon.reechoo,
               iconColor: iconColor,
               size: size ?? 20, onPressed: () {
-            TweetBottomSheet().openRetweetBottomSheet(context,
+            EchooBottomSheet().openReechooBottomSheet(context,
                 type: type, model: model, scaffoldKey: scaffoldKey);
           }),
           _iconWidget(
             context,
-            text: isTweetDetail ? '' : model.likeCount.toString(),
+            text: isEchooDetail ? '' : model.likeCount.toString(),
             icon: model.likeList!.any((userId) => userId == authState.userId)
                 ? AppIcon.heartFill
                 : AppIcon.heartEmpty,
             onPressed: () {
-              addLikeToTweet(context);
+              addLikeToEchoo(context);
             },
             iconColor:
                 model.likeList!.any((userId) => userId == authState.userId)
@@ -79,7 +79,7 @@ class TweetIconsRow extends StatelessWidget {
           ),
           _iconWidget(context, text: '', icon: null, sysIcon: Icons.share,
               onPressed: () {
-            shareTweet(context);
+            shareEchoo(context);
           }, iconColor: iconColor, size: size ?? 20),
         ],
       ),
@@ -137,7 +137,7 @@ class TweetIconsRow extends StatelessWidget {
             customText(Utility.getPostTime2(model.createdAt),
                 style: TextStyles.textStyle14),
             const SizedBox(width: 10),
-            customText('Fwitter for Android',
+            customText('Echooes for Android',
                 style: TextStyle(color: Theme.of(context).primaryColor))
           ],
         ),
@@ -149,8 +149,8 @@ class TweetIconsRow extends StatelessWidget {
   Widget _likeCommentWidget(BuildContext context) {
     bool isLikeAvailable =
         model.likeCount != null ? model.likeCount! > 0 : false;
-    bool isRetweetAvailable = model.retweetCount! > 0;
-    bool isLikeRetweetAvailable = isRetweetAvailable || isLikeAvailable;
+    bool isReechooAvailable = model.reechooCount! > 0;
+    bool isLikeReechooAvailable = isReechooAvailable || isLikeAvailable;
     return Column(
       children: <Widget>[
         const Divider(
@@ -159,32 +159,32 @@ class TweetIconsRow extends StatelessWidget {
         ),
         AnimatedContainer(
           padding:
-              EdgeInsets.symmetric(vertical: isLikeRetweetAvailable ? 12 : 0),
+              EdgeInsets.symmetric(vertical: isLikeReechooAvailable ? 12 : 0),
           duration: const Duration(milliseconds: 500),
-          child: !isLikeRetweetAvailable
+          child: !isLikeReechooAvailable
               ? const SizedBox.shrink()
               : Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    !isRetweetAvailable
+                    !isReechooAvailable
                         ? const SizedBox.shrink()
-                        : customText(model.retweetCount.toString(),
+                        : customText(model.reechooCount.toString(),
                             style:
                                 const TextStyle(fontWeight: FontWeight.bold)),
-                    !isRetweetAvailable
+                    !isReechooAvailable
                         ? const SizedBox.shrink()
                         : const SizedBox(width: 5),
                     AnimatedCrossFade(
                       firstChild: const SizedBox.shrink(),
-                      secondChild: customText('Retweets',
+                      secondChild: customText('Reechoos',
                           style: TextStyles.subtitleStyle),
-                      crossFadeState: !isRetweetAvailable
+                      crossFadeState: !isReechooAvailable
                           ? CrossFadeState.showFirst
                           : CrossFadeState.showSecond,
                       duration: const Duration(milliseconds: 800),
                     ),
-                    !isRetweetAvailable
+                    !isReechooAvailable
                         ? const SizedBox.shrink()
                         : const SizedBox(width: 20),
                     InkWell(
@@ -215,7 +215,7 @@ class TweetIconsRow extends StatelessWidget {
                   ],
                 ),
         ),
-        !isLikeRetweetAvailable
+        !isLikeReechooAvailable
             ? const SizedBox.shrink()
             : const Divider(
                 endIndent: 10,
@@ -236,10 +236,10 @@ class TweetIconsRow extends StatelessWidget {
     );
   }
 
-  void addLikeToTweet(BuildContext context) {
+  void addLikeToEchoo(BuildContext context) {
     var state = Provider.of<FeedState>(context, listen: false);
     var authState = Provider.of<AuthState>(context, listen: false);
-    state.addLikeToTweet(model, authState.userId);
+    state.addLikeToEchoo(model, authState.userId);
   }
 
   void onLikeTextPressed(BuildContext context) {
@@ -248,24 +248,24 @@ class TweetIconsRow extends StatelessWidget {
         builder: (BuildContext context) => UsersListPage(
           pageTitle: "Liked by",
           userIdsList: model.likeList!.map((userId) => userId).toList(),
-          emptyScreenText: "This tweet has no like yet",
+          emptyScreenText: "This echoo has no like yet",
           emptyScreenSubTileText:
-              "Once a user likes this tweet, user list will be shown here",
+              "Once a user likes this echoo, user list will be shown here",
         ),
       ),
     );
   }
 
-  void shareTweet(BuildContext context) async {
-    TweetBottomSheet().openShareTweetBottomSheet(context, model, type);
+  void shareEchoo(BuildContext context) async {
+    EchooBottomSheet().openShareEchooBottomSheet(context, model, type);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        isTweetDetail ? _timeWidget(context) : const SizedBox(),
-        isTweetDetail ? _likeCommentWidget(context) : const SizedBox(),
+        isEchooDetail ? _timeWidget(context) : const SizedBox(),
+        isEchooDetail ? _likeCommentWidget(context) : const SizedBox(),
         _likeCommentsIcons(context, model)
       ],
     );

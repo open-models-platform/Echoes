@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter_twitter_clone/model/user.dart';
+import 'package:Echoes/model/user.dart';
 
 class NotificationModel {
   String? id;
-  String? tweetKey;
+  String? echooKey;
   String? updatedAt;
   String? createdAt;
   late String? type;
@@ -12,20 +12,20 @@ class NotificationModel {
 
   NotificationModel({
     this.id,
-    this.tweetKey,
+    this.echooKey,
     required this.type,
     required this.createdAt,
     this.updatedAt,
     required this.data,
   });
 
-  NotificationModel.fromJson(String tweetId, Map<dynamic, dynamic> map) {
-    id = tweetId;
+  NotificationModel.fromJson(String echooId, Map<dynamic, dynamic> map) {
+    id = echooId;
     Map<String, dynamic> data = {};
     if (map.containsKey('data')) {
       data = json.decode(json.encode(map["data"])) as Map<String, dynamic>;
     }
-    tweetKey = tweetId;
+    echooKey = echooId;
     updatedAt = map["updatedAt"];
     type = map["type"];
     createdAt = map["createdAt"];

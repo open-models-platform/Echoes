@@ -249,7 +249,7 @@ class Utility {
       uriPrefix: 'https://fwitter.page.link',
       link: Uri.parse('https://twitter.com/$id'),
       androidParameters: AndroidParameters(
-        packageName: 'com.thealphamerc.flutter_twitter_clone_dev',
+        packageName: 'com.thealphamerc.Echoes_dev',
         minimumVersion: 0,
       ),
       socialMetaTagParameters: socialMetaTagParameters,
@@ -266,7 +266,7 @@ class Utility {
     var url = await createLinkToShare(context, id,
         socialMetaTagParameters: socialMetaTagParameters);
 
-    share(url.toString(), subject: "Tweet");
+    share(url.toString(), subject: "Echoo");
   }
 
   static shareFile(List<String> path, {String text = ""}) {

@@ -8,7 +8,7 @@ class PushNotificationModel {
     required this.senderId,
     required this.title,
     required this.body,
-    required this.tweetId,
+    required this.echooId,
   });
 
   final String id;
@@ -17,7 +17,7 @@ class PushNotificationModel {
   final String senderId;
   final String title;
   final String body;
-  final String tweetId;
+  final String echooId;
 
   factory PushNotificationModel.fromRawJson(String str) =>
       PushNotificationModel.fromJson(json.decode(str));
@@ -32,7 +32,7 @@ class PushNotificationModel {
         senderId: json["senderId"],
         title: json["title"],
         body: json["body"],
-        tweetId: json["tweetId"],
+        echooId: json["echooId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -42,7 +42,7 @@ class PushNotificationModel {
         "senderId": senderId,
         "title": title,
         "body": body,
-        "tweetId": tweetId,
+        "echooId": echooId,
       };
 }
 

@@ -1,25 +1,25 @@
 import 'dart:async';
 
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/push_notification_model.dart';
+import 'package:Echoes/resource/push_notification_service.dart';
+import 'package:Echoes/state/appState.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/state/chats/chatState.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/state/notificationState.dart';
+import 'package:Echoes/state/searchState.dart';
+import 'package:Echoes/state/suggestionUserState.dart';
+import 'package:Echoes/ui/page/feed/feedPage.dart';
+import 'package:Echoes/ui/page/feed/feedPostDetail.dart';
+import 'package:Echoes/ui/page/feed/suggestedUsers.dart';
+import 'package:Echoes/ui/page/message/chatListPage.dart';
+import 'package:Echoes/ui/page/profile/profilePage.dart';
+import 'package:Echoes/widgets/bottomMenuBar/bottomMenuBar.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/push_notification_model.dart';
-import 'package:flutter_twitter_clone/resource/push_notification_service.dart';
-import 'package:flutter_twitter_clone/state/appState.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/state/chats/chatState.dart';
-import 'package:flutter_twitter_clone/state/suggestionUserState.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/state/notificationState.dart';
-import 'package:flutter_twitter_clone/state/searchState.dart';
-import 'package:flutter_twitter_clone/ui/page/feed/feedPage.dart';
-import 'package:flutter_twitter_clone/ui/page/feed/feedPostDetail.dart';
-import 'package:flutter_twitter_clone/ui/page/feed/suggestedUsers.dart';
-import 'package:flutter_twitter_clone/ui/page/message/chatListPage.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/profilePage.dart';
-import 'package:flutter_twitter_clone/widgets/bottomMenuBar/bottomMenuBar.dart';
 import 'package:provider/provider.dart';
 
 import 'common/locator.dart';
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var state = Provider.of<AppState>(context, listen: false);
       state.setPageIndex = 0;
-      initTweets();
+      initEchoos();
       initProfile();
       initSearch();
       initNotification();
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void initTweets() {
+  void initEchoos() {
     var state = Provider.of<FeedState>(context, listen: false);
     state.databaseInit();
     state.getDataFromDatabase();
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
   /// Listen for every push notifications when app is in background
   /// Check for push notifications when app is launched by tapping on push notifications from system tray.
   /// If notification type is `NotificationType.Message` then chat screen will open
-  /// If notification type is `NotificationType.Mention` then user profile will open who tagged/mentioned you in a tweet
+  /// If notification type is `NotificationType.Mention` then user profile will open who tagged/mentioned you in a echoo
   void listenPushNotification(PushNotificationModel model) {
     final authState = Provider.of<AuthState>(context, listen: false);
     var state = Provider.of<NotificationState>(context, listen: false);
@@ -114,17 +114,17 @@ class _HomePageState extends State<HomePage> {
       });
     }
 
-    /// Checks for user tag tweet notification
-    /// Redirect user to tweet detail if
-    /// Tweet contains
-    /// If you are mentioned in tweet then it redirect to user profile who mentioned you in a tweet
-    /// You can check that tweet on his profile timeline
-    /// `model.data.senderId` is user id who tagged you in a tweet
+    /// Checks for user tag echoo notification
+    /// Redirect user to echoo detail if
+    /// Echoo contains
+    /// If you are mentioned in echoo then it redirect to user profile who mentioned you in a echoo
+    /// You can check that echoo on his profile timeline
+    /// `model.data.senderId` is user id who tagged you in a echoo
     else if (model.type == NotificationType.Mention.toString() &&
         model.receiverId == authState.user!.uid) {
       var feedState = Provider.of<FeedState>(context, listen: false);
-      feedState.getPostDetailFromDatabase(model.tweetId);
-      Navigator.push(context, FeedPostDetail.getRoute(model.tweetId));
+      feedState.getPostDetailFromDatabase(model.echooId);
+      Navigator.push(context, FeedPostDetail.getRoute(model.echooId));
     }
   }
 
@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
     var id = deepLink.path.split("/")[2];
     if (type == "profilePage") {
       Navigator.push(context, ProfilePage.getRoute(profileId: id));
-    } else if (type == "tweet") {
+    } else if (type == "echoo") {
       var feedState = Provider.of<FeedState>(context, listen: false);
       feedState.getPostDetailFromDatabase(id);
       Navigator.push(context, FeedPostDetail.getRoute(id));

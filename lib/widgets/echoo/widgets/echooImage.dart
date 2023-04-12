@@ -1,19 +1,19 @@
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/cache_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/widgets/cache_image.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
 import 'package:provider/provider.dart';
 
-class TweetImage extends StatelessWidget {
-  const TweetImage(
-      {Key? key, required this.model, this.type, this.isRetweetImage = false})
+class EchooImage extends StatelessWidget {
+  const EchooImage(
+      {Key? key, required this.model, this.type, this.isReechooImage = false})
       : super(key: key);
 
   final FeedModel model;
-  final TweetType? type;
-  final bool isRetweetImage;
+  final EchooType? type;
+  final bool isReechooImage;
   @override
   Widget build(BuildContext context) {
     if (model.imagePath != null) assert(type != null);
@@ -26,24 +26,24 @@ class TweetImage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 8),
               child: InkWell(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(isRetweetImage ? 0 : 20),
+                  Radius.circular(isReechooImage ? 0 : 20),
                 ),
                 onTap: () {
-                  if (type == TweetType.ParentTweet) {
+                  if (type == EchooType.ParentEchoo) {
                     return;
                   }
                   var state = Provider.of<FeedState>(context, listen: false);
                   state.getPostDetailFromDatabase(model.key);
-                  state.setTweetToReply = model;
+                  state.setEchooToReply = model;
                   Navigator.pushNamed(context, '/ImageViewPge');
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(isRetweetImage ? 0 : 20),
+                    Radius.circular(isReechooImage ? 0 : 20),
                   ),
                   child: Container(
                     width:
-                        context.width * (type == TweetType.Detail ? .95 : .8) -
+                        context.width * (type == EchooType.Detail ? .95 : .8) -
                             8,
                     decoration: BoxDecoration(
                       color: Theme.of(context).backgroundColor,

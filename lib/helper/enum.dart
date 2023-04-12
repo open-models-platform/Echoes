@@ -3,11 +3,12 @@ enum AuthStatus {
   NOT_LOGGED_IN,
   LOGGED_IN,
 }
-enum TweetType {
-  Tweet,
+
+enum EchooType {
+  Echoo,
   Detail,
   Reply,
-  ParentTweet,
+  ParentEchoo,
 }
 
 enum SortUser {
@@ -21,9 +22,9 @@ enum SortUser {
 enum NotificationType {
   NOT_DETERMINED,
   Message,
-  Tweet,
+  Echoo,
   Reply,
-  Retweet,
+  Reechoo,
   Follow,
   Mention,
   Like

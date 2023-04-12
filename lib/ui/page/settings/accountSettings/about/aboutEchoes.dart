@@ -1,10 +1,10 @@
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/ui/page/settings/widgets/headerWidget.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsRowWidget.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customAppBar.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/headerWidget.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsRowWidget.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customAppBar.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class AboutPage extends StatelessWidget {
       appBar: CustomAppBar(
         isBackButton: true,
         title: customTitleText(
-          'About Fwitter',
+          'About Echooes',
         ),
       ),
       body: ListView(
@@ -32,7 +32,7 @@ class AboutPage extends StatelessWidget {
             showDivider: false,
             onPressed: () {
               Utility.launchURL(
-                  "https://github.com/TheAlphamerc/flutter_twitter_clone/issues");
+                  "https://github.com/open-models-platform/Echoes/issues");
             },
           ),
           const HeaderWidget('Legal'),
@@ -54,7 +54,7 @@ class AboutPage extends StatelessWidget {
             onPressed: () async {
               showLicensePage(
                 context: context,
-                applicationName: 'Fwitter',
+                applicationName: 'Echooes',
                 applicationVersion: '1.0.0',
                 useRootNavigator: true,
               );
@@ -62,7 +62,7 @@ class AboutPage extends StatelessWidget {
           ),
           const HeaderWidget('Developer'),
           SettingRowWidget("Github", showDivider: true, onPressed: () {
-            Utility.launchURL("https://github.com/TheAlphamerc");
+            Utility.launchURL("https://github.com/open-models-platform");
           }),
           SettingRowWidget("LinkidIn", showDivider: true, onPressed: () {
             Utility.launchURL("https://www.linkedin.com/in/thealphamerc/");

@@ -1,10 +1,10 @@
+import 'package:Echoes/ui/page/settings/widgets/headerWidget.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsRowWidget.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customAppBar.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/newWidget/title_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/headerWidget.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsRowWidget.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customAppBar.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/title_text.dart';
 
 class DisplayAndSoundPage extends StatelessWidget {
   const DisplayAndSoundPage({Key? key}) : super(key: key);
@@ -143,7 +143,7 @@ class DisplayAndSoundPage extends StatelessWidget {
           const SettingRowWidget(
             "Emoji",
             subtitle:
-                'Use the Fwitter set instead of your device\'s default set',
+                'Use the Echooes set instead of your device\'s default set',
             showDivider: false,
             showCheckBox: false,
           ),
@@ -162,7 +162,7 @@ class DisplayAndSoundPage extends StatelessWidget {
           ),
           const SettingRowWidget(
             "Use in-app browser",
-            subtitle: 'Open external links with Fwitter browser',
+            subtitle: 'Open external links with Echooes browser',
             showCheckBox: false,
           ),
         ],

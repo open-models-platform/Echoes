@@ -1,11 +1,12 @@
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/ui/page/Auth/signup.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customFlatButton.dart';
+import 'package:Echoes/widgets/newWidget/title_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/ui/page/Auth/signup.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customFlatButton.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/title_text.dart';
 import 'package:provider/provider.dart';
+
 import '../homePage.dart';
 import 'signin.dart';
 

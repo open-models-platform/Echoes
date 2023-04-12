@@ -1,11 +1,11 @@
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/searchState.dart';
+import 'package:Echoes/ui/page/common/widget/userListWidget.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customAppBar.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/newWidget/emptyList.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/state/searchState.dart';
-import 'package:flutter_twitter_clone/ui/page/common/widget/userListWidget.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customAppBar.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/emptyList.dart';
 import 'package:provider/provider.dart';
 
 class UsersListPage extends StatelessWidget {

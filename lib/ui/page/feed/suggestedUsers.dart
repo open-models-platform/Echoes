@@ -1,13 +1,13 @@
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/state/searchState.dart';
+import 'package:Echoes/state/suggestionUserState.dart';
+import 'package:Echoes/ui/page/common/widget/userListWidget.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customFlatButton.dart';
+import 'package:Echoes/widgets/newWidget/customLoader.dart';
+import 'package:Echoes/widgets/newWidget/emptyList.dart';
+import 'package:Echoes/widgets/newWidget/title_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/state/suggestionUserState.dart';
-import 'package:flutter_twitter_clone/state/searchState.dart';
-import 'package:flutter_twitter_clone/ui/page/common/widget/userListWidget.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customFlatButton.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/customLoader.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/emptyList.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/title_text.dart';
 import 'package:provider/provider.dart';
 
 class SuggestedUsers extends StatefulWidget {
@@ -133,7 +133,7 @@ class _SuggestedUsersState extends State<SuggestedUsers> {
                                   TitleText('Suggestions for you to follow'),
                                   SizedBox(height: 8),
                                   Text(
-                                    'When you follow someone, you\'ll see their Tweets in your Home Timeline',
+                                    'When you follow someone, you\'ll see their Echoos in your Home Timeline',
                                     style: TextStyles.textStyle14,
                                   ),
                                 ],

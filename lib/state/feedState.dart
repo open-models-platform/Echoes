@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:io';
+
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/shared_prefrence_helper.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/appState.dart';
+import 'package:Echoes/ui/page/common/locator.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/firebase_database.dart' as database;
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/shared_prefrence_helper.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/state/appState.dart';
-import 'package:flutter_twitter_clone/ui/page/common/locator.dart';
 import 'package:link_preview_generator/link_preview_generator.dart'
     show WebInfo;
 import 'package:path/path.dart' as path;
@@ -19,22 +20,22 @@ import 'package:translator/translator.dart';
 
 class FeedState extends AppState {
   bool isBusy = false;
-  Map<String, List<FeedModel>?>? tweetReplyMap = {};
-  FeedModel? _tweetToReplyModel;
-  FeedModel? get tweetToReplyModel => _tweetToReplyModel;
-  set setTweetToReply(FeedModel model) {
-    _tweetToReplyModel = model;
+  Map<String, List<FeedModel>?>? echooReplyMap = {};
+  FeedModel? _echooToReplyModel;
+  FeedModel? get echooToReplyModel => _echooToReplyModel;
+  set setEchooToReply(FeedModel model) {
+    _echooToReplyModel = model;
   }
 
   late List<FeedModel> _commentList;
 
   List<FeedModel>? _feedList;
   database.Query? _feedQuery;
-  List<FeedModel>? _tweetDetailModelList;
+  List<FeedModel>? _echooDetailModelList;
 
-  List<FeedModel>? get tweetDetailModel => _tweetDetailModelList;
+  List<FeedModel>? get echooDetailModel => _echooDetailModelList;
 
-  /// `feedList` always [contain all tweets] fetched from firebase database
+  /// `feedList` always [contain all echoos] fetched from firebase database
   List<FeedModel>? get feedList {
     if (_feedList == null) {
       return null;
@@ -43,8 +44,8 @@ class FeedState extends AppState {
     }
   }
 
-  /// contain tweet list for home page
-  List<FeedModel>? getTweetList(UserModel? userModel) {
+  /// contain echoo list for home page
+  List<FeedModel>? getEchooList(UserModel? userModel) {
     if (userModel == null) {
       return null;
     }
@@ -53,14 +54,14 @@ class FeedState extends AppState {
 
     if (!isBusy && feedList != null && feedList!.isNotEmpty) {
       list = feedList!.where((x) {
-        /// If Tweet is a comment then no need to add it in tweet list
+        /// If Echoo is a comment then no need to add it in echoo list
         if (x.parentkey != null &&
             x.childRetwetkey == null &&
             x.user!.userId != userModel.userId) {
           return false;
         }
 
-        /// Only include Tweets of logged-in user's and his following user's
+        /// Only include Echoos of logged-in user's and his following user's
         if (x.user!.userId == userModel.userId ||
             (userModel.followingList != null &&
                 userModel.followingList!.contains(x.user!.userId))) {
@@ -82,63 +83,63 @@ class FeedState extends AppState {
     _linkWebInfos.addAll({url: webInfo});
   }
 
-  Map<String, Translation?> _tweetsTranslations = {};
-  Map<String, Translation?> get tweetsTranslations => _tweetsTranslations;
-  void addTweetTranslation(String tweet, Translation? translation) {
-    _tweetsTranslations.addAll({tweet: translation});
+  Map<String, Translation?> _echoosTranslations = {};
+  Map<String, Translation?> get echoosTranslations => _echoosTranslations;
+  void addEchooTranslation(String echoo, Translation? translation) {
+    _echoosTranslations.addAll({echoo: translation});
     notifyListeners();
   }
 
-  /// set tweet for detail tweet page
-  /// Setter call when tweet is tapped to view detail
-  /// Add Tweet detail is added in _tweetDetailModelList
-  /// It makes `Fwitter` to view nested Tweets
+  /// set echoo for detail echoo page
+  /// Setter call when echoo is tapped to view detail
+  /// Add Echoo detail is added in _echooDetailModelList
+  /// It makes `Echooes` to view nested Echoos
   set setFeedModel(FeedModel model) {
-    _tweetDetailModelList ??= [];
+    _echooDetailModelList ??= [];
 
-    /// [Skip if any duplicate tweet already present]
+    /// [Skip if any duplicate echoo already present]
 
-    _tweetDetailModelList!.add(model);
-    cprint("Detail Tweet added. Total Tweet: ${_tweetDetailModelList!.length}");
+    _echooDetailModelList!.add(model);
+    cprint("Detail Echoo added. Total Echoo: ${_echooDetailModelList!.length}");
     notifyListeners();
   }
 
-  /// `remove` last Tweet from tweet detail page stack
-  /// Function called when navigating back from a Tweet detail
-  /// `_tweetDetailModelList` is map which contain lists of comment Tweet list
-  /// After removing Tweet from Tweet detail Page stack its comments tweet is also removed from `_tweetDetailModelList`
-  void removeLastTweetDetail(String tweetKey) {
-    if (_tweetDetailModelList != null && _tweetDetailModelList!.isNotEmpty) {
-      // var index = _tweetDetailModelList.in
-      FeedModel removeTweet =
-          _tweetDetailModelList!.lastWhere((x) => x.key == tweetKey);
-      _tweetDetailModelList!.remove(removeTweet);
-      tweetReplyMap?.removeWhere((key, value) => key == tweetKey);
+  /// `remove` last Echoo from echoo detail page stack
+  /// Function called when navigating back from a Echoo detail
+  /// `_echooDetailModelList` is map which contain lists of comment Echoo list
+  /// After removing Echoo from Echoo detail Page stack its comments echoo is also removed from `_echooDetailModelList`
+  void removeLastEchooDetail(String echooKey) {
+    if (_echooDetailModelList != null && _echooDetailModelList!.isNotEmpty) {
+      // var index = _echooDetailModelList.in
+      FeedModel removeEchoo =
+          _echooDetailModelList!.lastWhere((x) => x.key == echooKey);
+      _echooDetailModelList!.remove(removeEchoo);
+      echooReplyMap?.removeWhere((key, value) => key == echooKey);
       cprint(
-          "Last index Tweet removed from list. Remaining Tweet: ${_tweetDetailModelList!.length}");
+          "Last index Echoo removed from list. Remaining Echoo: ${_echooDetailModelList!.length}");
       notifyListeners();
     }
   }
 
-  /// [clear all tweets] if any tweet present in tweet detail page or comment tweet
-  void clearAllDetailAndReplyTweetStack() {
-    if (_tweetDetailModelList != null) {
-      _tweetDetailModelList!.clear();
+  /// [clear all echoos] if any echoo present in echoo detail page or comment echoo
+  void clearAllDetailAndReplyEchooStack() {
+    if (_echooDetailModelList != null) {
+      _echooDetailModelList!.clear();
     }
-    if (tweetReplyMap != null) {
-      tweetReplyMap!.clear();
+    if (echooReplyMap != null) {
+      echooReplyMap!.clear();
     }
-    cprint('Empty tweets from stack');
+    cprint('Empty echoos from stack');
   }
 
-  /// [Subscribe Tweets] firebase Database
+  /// [Subscribe Echoos] firebase Database
   Future<bool> databaseInit() {
     try {
       if (_feedQuery == null) {
-        _feedQuery = kDatabase.child("tweet");
-        _feedQuery!.onChildAdded.listen(_onTweetAdded);
-        _feedQuery!.onChildChanged.listen(_onTweetChanged);
-        _feedQuery!.onChildRemoved.listen(_onTweetRemoved);
+        _feedQuery = kDatabase.child("echoo");
+        _feedQuery!.onChildAdded.listen(_onEchooAdded);
+        _feedQuery!.onChildChanged.listen(_onEchooChanged);
+        _feedQuery!.onChildRemoved.listen(_onEchooRemoved);
       }
 
       return Future.value(true);
@@ -148,13 +149,13 @@ class FeedState extends AppState {
     }
   }
 
-  /// get [Tweet list] from firebase realtime database
+  /// get [Echoo list] from firebase realtime database
   void getDataFromDatabase() {
     try {
       isBusy = true;
       _feedList = null;
       notifyListeners();
-      kDatabase.child('tweet').once().then((DatabaseEvent event) {
+      kDatabase.child('echoo').once().then((DatabaseEvent event) {
         final snapshot = event.snapshot;
         _feedList = <FeedModel>[];
         if (snapshot.value != null) {
@@ -163,13 +164,13 @@ class FeedState extends AppState {
             map.forEach((key, value) {
               var model = FeedModel.fromJson(value);
               model.key = key;
-              if (model.isValidTweet) {
+              if (model.isValidEchoo) {
                 _feedList!.add(model);
               }
             });
 
-            /// Sort Tweet by time
-            /// It helps to display newest Tweet first.
+            /// Sort Echoo by time
+            /// It helps to display newest Echoo first.
             _feedList!.sort((x, y) => DateTime.parse(x.createdAt)
                 .compareTo(DateTime.parse(y.createdAt)));
           }
@@ -185,49 +186,49 @@ class FeedState extends AppState {
     }
   }
 
-  /// get [Tweet Detail] from firebase realtime kDatabase
-  /// If model is null then fetch tweet from firebase
-  /// [getPostDetailFromDatabase] is used to set prepare Tweet to display Tweet detail
-  /// After getting tweet detail fetch tweet comments from firebase
+  /// get [Echoo Detail] from firebase realtime kDatabase
+  /// If model is null then fetch echoo from firebase
+  /// [getPostDetailFromDatabase] is used to set prepare Echoo to display Echoo detail
+  /// After getting echoo detail fetch echoo comments from firebase
   void getPostDetailFromDatabase(String? postID, {FeedModel? model}) async {
     try {
-      FeedModel? _tweetDetail;
+      FeedModel? _echooDetail;
       if (model != null) {
-        // set tweet data from tweet list data.
-        // No need to fetch tweet from firebase db if data already present in tweet list
-        _tweetDetail = model;
-        setFeedModel = _tweetDetail;
+        // set echoo data from echoo list data.
+        // No need to fetch echoo from firebase db if data already present in echoo list
+        _echooDetail = model;
+        setFeedModel = _echooDetail;
         postID = model.key;
       } else {
         assert(postID != null);
-        // Fetch tweet data from firebase
+        // Fetch echoo data from firebase
         kDatabase
-            .child('tweet')
+            .child('echoo')
             .child(postID!)
             .once()
             .then((DatabaseEvent event) {
           final snapshot = event.snapshot;
           if (snapshot.value != null) {
             var map = snapshot.value as Map<dynamic, dynamic>;
-            _tweetDetail = FeedModel.fromJson(map);
-            _tweetDetail!.key = snapshot.key!;
-            setFeedModel = _tweetDetail!;
+            _echooDetail = FeedModel.fromJson(map);
+            _echooDetail!.key = snapshot.key!;
+            setFeedModel = _echooDetail!;
           }
         });
       }
 
-      if (_tweetDetail != null) {
-        // Fetch comment tweets
+      if (_echooDetail != null) {
+        // Fetch comment echoos
         _commentList = <FeedModel>[];
-        // Check if parent tweet has reply tweets or not
-        if (_tweetDetail!.replyTweetKeyList != null &&
-            _tweetDetail!.replyTweetKeyList!.isNotEmpty) {
-          for (String? x in _tweetDetail!.replyTweetKeyList!) {
+        // Check if parent echoo has reply echoos or not
+        if (_echooDetail!.replyEchooKeyList != null &&
+            _echooDetail!.replyEchooKeyList!.isNotEmpty) {
+          for (String? x in _echooDetail!.replyEchooKeyList!) {
             if (x == null) {
               return;
             }
             kDatabase
-                .child('tweet')
+                .child('echoo')
                 .child(x)
                 .once()
                 .then((DatabaseEvent event) {
@@ -237,24 +238,24 @@ class FeedState extends AppState {
                 String key = snapshot.key!;
                 commentModel.key = key;
 
-                /// add comment tweet to list if tweet is not present in [comment tweet ]list
+                /// add comment echoo to list if echoo is not present in [comment echoo ]list
                 /// To reduce delicacy
                 if (!_commentList.any((x) => x.key == key)) {
                   _commentList.add(commentModel);
                 }
               } else {}
-              if (x == _tweetDetail!.replyTweetKeyList!.last) {
+              if (x == _echooDetail!.replyEchooKeyList!.last) {
                 /// Sort comment by time
-                /// It helps to display newest Tweet first.
+                /// It helps to display newest Echoo first.
                 _commentList.sort((x, y) => DateTime.parse(y.createdAt)
                     .compareTo(DateTime.parse(x.createdAt)));
-                tweetReplyMap!.putIfAbsent(postID!, () => _commentList);
+                echooReplyMap!.putIfAbsent(postID!, () => _commentList);
                 notifyListeners();
               }
             });
           }
         } else {
-          tweetReplyMap!.putIfAbsent(postID!, () => _commentList);
+          echooReplyMap!.putIfAbsent(postID!, () => _commentList);
           notifyListeners();
         }
       }
@@ -263,103 +264,103 @@ class FeedState extends AppState {
     }
   }
 
-  /// Fetch `Retweet` model from firebase realtime kDatabase.
-  /// Retweet itself  is a type of `Tweet`
-  Future<FeedModel?> fetchTweet(String postID) async {
-    FeedModel? _tweetDetail;
+  /// Fetch `Reechoo` model from firebase realtime kDatabase.
+  /// Reechoo itself  is a type of `Echoo`
+  Future<FeedModel?> fetchEchoo(String postID) async {
+    FeedModel? _echooDetail;
 
-    /// If tweet is available in feedList then no need to fetch it from firebase
+    /// If echoo is available in feedList then no need to fetch it from firebase
     if (feedList!.any((x) => x.key == postID)) {
-      _tweetDetail = feedList!.firstWhere((x) => x.key == postID);
+      _echooDetail = feedList!.firstWhere((x) => x.key == postID);
     }
 
-    /// If tweet is not available in feedList then need to fetch it from firebase
+    /// If echoo is not available in feedList then need to fetch it from firebase
     else {
       cprint("Fetched from DB: " + postID);
-      var model = await kDatabase.child('tweet').child(postID).once().then(
+      var model = await kDatabase.child('echoo').child(postID).once().then(
         (DatabaseEvent event) {
           final snapshot = event.snapshot;
           if (snapshot.value != null) {
             var map = snapshot.value as Map<dynamic, dynamic>;
-            _tweetDetail = FeedModel.fromJson(map);
-            _tweetDetail!.key = snapshot.key!;
-            print(_tweetDetail!.description);
+            _echooDetail = FeedModel.fromJson(map);
+            _echooDetail!.key = snapshot.key!;
+            print(_echooDetail!.description);
           }
         },
       );
       if (model != null) {
-        _tweetDetail = model;
+        _echooDetail = model;
       } else {
         cprint("Fetched null value from  DB");
       }
     }
-    return _tweetDetail;
+    return _echooDetail;
   }
 
-  /// create [New Tweet]
-  /// returns Tweet key
-  Future<String?> createTweet(FeedModel model) async {
-    ///  Create tweet in [Firebase kDatabase]
+  /// create [New Echoo]
+  /// returns Echoo key
+  Future<String?> createEchoo(FeedModel model) async {
+    ///  Create echoo in [Firebase kDatabase]
     isBusy = true;
     notifyListeners();
-    String? tweetKey;
+    String? echooKey;
     try {
-      DatabaseReference dbReference = kDatabase.child('tweet').push();
+      DatabaseReference dbReference = kDatabase.child('echoo').push();
 
       await dbReference.set(model.toJson());
 
-      tweetKey = dbReference.key;
+      echooKey = dbReference.key;
     } catch (error) {
-      cprint(error, errorIn: 'createTweet');
+      cprint(error, errorIn: 'createEchoo');
     }
     isBusy = false;
     notifyListeners();
-    return tweetKey;
+    return echooKey;
   }
 
-  ///  It will create tweet in [Firebase kDatabase] just like other normal tweet.
-  ///  update retweet count for retweet model
-  Future<String?> createReTweet(FeedModel model) async {
-    String? tweetKey;
+  ///  It will create echoo in [Firebase kDatabase] just like other normal echoo.
+  ///  update reechoo count for reechoo model
+  Future<String?> createReEchoo(FeedModel model) async {
+    String? echooKey;
     try {
-      tweetKey = await createTweet(model);
-      if (_tweetToReplyModel != null) {
-        if (_tweetToReplyModel!.retweetCount == null) {
-          _tweetToReplyModel!.retweetCount = 0;
+      echooKey = await createEchoo(model);
+      if (_echooToReplyModel != null) {
+        if (_echooToReplyModel!.reechooCount == null) {
+          _echooToReplyModel!.reechooCount = 0;
         }
-        _tweetToReplyModel!.retweetCount =
-            _tweetToReplyModel!.retweetCount! + 1;
-        updateTweet(_tweetToReplyModel!);
+        _echooToReplyModel!.reechooCount =
+            _echooToReplyModel!.reechooCount! + 1;
+        updateEchoo(_echooToReplyModel!);
       }
     } catch (error) {
-      cprint(error, errorIn: 'createReTweet');
+      cprint(error, errorIn: 'createReEchoo');
     }
-    return tweetKey;
+    return echooKey;
   }
 
-  /// [Delete tweet] in Firebase kDatabase
-  /// Remove Tweet if present in home page Tweet list
-  /// Remove Tweet if present in Tweet detail page or in comment
-  deleteTweet(String tweetId, TweetType type, {String? parentkey} //FIXME
+  /// [Delete echoo] in Firebase kDatabase
+  /// Remove Echoo if present in home page Echoo list
+  /// Remove Echoo if present in Echoo detail page or in comment
+  deleteEchoo(String echooId, EchooType type, {String? parentkey} //FIXME
       ) {
     try {
-      /// Delete tweet if it is in nested tweet detail page
-      kDatabase.child('tweet').child(tweetId).remove().then((_) {
-        if (type == TweetType.Detail &&
-            _tweetDetailModelList != null &&
-            _tweetDetailModelList!.isNotEmpty) {
-          // var deletedTweet =
-          //     _tweetDetailModelList.firstWhere((x) => x.key == tweetId);
-          _tweetDetailModelList!.remove(_tweetDetailModelList!);
-          if (_tweetDetailModelList!.isEmpty) {
-            _tweetDetailModelList = null;
+      /// Delete echoo if it is in nested echoo detail page
+      kDatabase.child('echoo').child(echooId).remove().then((_) {
+        if (type == EchooType.Detail &&
+            _echooDetailModelList != null &&
+            _echooDetailModelList!.isNotEmpty) {
+          // var deletedEchoo =
+          //     _echooDetailModelList.firstWhere((x) => x.key == echooId);
+          _echooDetailModelList!.remove(_echooDetailModelList!);
+          if (_echooDetailModelList!.isEmpty) {
+            _echooDetailModelList = null;
           }
 
-          cprint('Tweet deleted from nested tweet detail page tweet');
+          cprint('Echoo deleted from nested echoo detail page echoo');
         }
       });
     } catch (error) {
-      cprint(error, errorIn: 'deleteTweet');
+      cprint(error, errorIn: 'deleteEchoo');
     }
   }
 
@@ -370,7 +371,7 @@ class FeedState extends AppState {
       notifyListeners();
       var storageReference = FirebaseStorage.instance
           .ref()
-          .child("tweetImage")
+          .child("echooImage")
           .child(path.basename(DateTime.now().toIso8601String() + file.path));
       await storageReference.putFile(file);
 
@@ -392,7 +393,7 @@ class FeedState extends AppState {
       var filePath = url.split(".com/o/")[1];
       filePath = filePath.replaceAll(RegExp(r'%2F'), '/');
       filePath = filePath.replaceAll(RegExp(r'(\?alt).*'), '');
-      //  filePath = filePath.replaceAll('tweetImage/', '');
+      //  filePath = filePath.replaceAll('echooImage/', '');
       cprint('[Path]' + filePath);
       var storageReference = FirebaseStorage.instance.ref();
       await storageReference.child(filePath).delete().catchError((val) {
@@ -405,66 +406,66 @@ class FeedState extends AppState {
     }
   }
 
-  /// [update] tweet
-  Future<void> updateTweet(FeedModel model) async {
-    await kDatabase.child('tweet').child(model.key!).set(model.toJson());
+  /// [update] echoo
+  Future<void> updateEchoo(FeedModel model) async {
+    await kDatabase.child('echoo').child(model.key!).set(model.toJson());
   }
 
-  /// Add/Remove like on a Tweet
-  /// [postId] is tweet id, [userId] is user's id who like/unlike Tweet
-  addLikeToTweet(FeedModel tweet, String userId) {
+  /// Add/Remove like on a Echoo
+  /// [postId] is echoo id, [userId] is user's id who like/unlike Echoo
+  addLikeToEchoo(FeedModel echoo, String userId) {
     try {
-      if (tweet.likeList != null &&
-          tweet.likeList!.isNotEmpty &&
-          tweet.likeList!.any((id) => id == userId)) {
-        // If user wants to undo/remove his like on tweet
-        tweet.likeList!.removeWhere((id) => id == userId);
-        tweet.likeCount = tweet.likeCount! - 1;
+      if (echoo.likeList != null &&
+          echoo.likeList!.isNotEmpty &&
+          echoo.likeList!.any((id) => id == userId)) {
+        // If user wants to undo/remove his like on echoo
+        echoo.likeList!.removeWhere((id) => id == userId);
+        echoo.likeCount = echoo.likeCount! - 1;
       } else {
-        // If user like Tweet
-        tweet.likeList ??= [];
-        tweet.likeList!.add(userId);
-        tweet.likeCount = tweet.likeCount! + 1;
+        // If user like Echoo
+        echoo.likeList ??= [];
+        echoo.likeList!.add(userId);
+        echoo.likeCount = echoo.likeCount! + 1;
       }
-      // update likeList of a tweet
+      // update likeList of a echoo
       kDatabase
-          .child('tweet')
-          .child(tweet.key!)
+          .child('echoo')
+          .child(echoo.key!)
           .child('likeList')
-          .set(tweet.likeList);
+          .set(echoo.likeList);
 
-      // Sends notification to user who created tweet
+      // Sends notification to user who created echoo
       // UserModel owner can see notification on notification page
       kDatabase
           .child('notification')
-          .child(tweet.userId)
-          .child(tweet.key!)
+          .child(echoo.userId)
+          .child(echoo.key!)
           .set({
         'type':
-            tweet.likeList!.isEmpty ? null : NotificationType.Like.toString(),
+            echoo.likeList!.isEmpty ? null : NotificationType.Like.toString(),
         'updatedAt':
-            tweet.likeList!.isEmpty ? null : DateTime.now().toUtc().toString(),
+            echoo.likeList!.isEmpty ? null : DateTime.now().toUtc().toString(),
       });
     } catch (error) {
-      cprint(error, errorIn: 'addLikeToTweet');
+      cprint(error, errorIn: 'addLikeToEchoo');
     }
   }
 
-  /// Add [new comment tweet] to any tweet
-  /// Comment is a Tweet itself
-  Future<String?> addCommentToPost(FeedModel replyTweet) async {
+  /// Add [new comment echoo] to any echoo
+  /// Comment is a Echoo itself
+  Future<String?> addCommentToPost(FeedModel replyEchoo) async {
     try {
       isBusy = true;
       notifyListeners();
-      // String tweetKey;
-      if (_tweetToReplyModel != null) {
-        FeedModel tweet =
-            _feedList!.firstWhere((x) => x.key == _tweetToReplyModel!.key);
-        var json = replyTweet.toJson();
-        DatabaseReference ref = kDatabase.child('tweet').push();
+      // String echooKey;
+      if (_echooToReplyModel != null) {
+        FeedModel echoo =
+            _feedList!.firstWhere((x) => x.key == _echooToReplyModel!.key);
+        var json = replyEchoo.toJson();
+        DatabaseReference ref = kDatabase.child('echoo').push();
         await ref.set(json);
-        tweet.replyTweetKeyList!.add(ref.key);
-        await updateTweet(tweet);
+        echoo.replyEchooKeyList!.add(ref.key);
+        await updateEchoo(echoo);
         return ref.key;
       } else {
         return null;
@@ -478,20 +479,20 @@ class FeedState extends AppState {
     }
   }
 
-  /// Add Tweet in bookmark
-  Future addBookmark(String tweetId) async {
+  /// Add Echoo in bookmark
+  Future addBookmark(String echooId) async {
     final pref = getIt<SharedPreferenceHelper>();
     var userId = await pref.getUserProfile().then((value) => value!.userId);
     DatabaseReference dbReference =
-        kDatabase.child('bookmark').child(userId!).child(tweetId);
+        kDatabase.child('bookmark').child(userId!).child(echooId);
     await dbReference.set(
-        {"tweetId": tweetId, "created_at": DateTime.now().toUtc().toString()});
+        {"echooId": echooId, "created_at": DateTime.now().toUtc().toString()});
   }
 
-  /// Trigger when any tweet changes or update
-  /// When any tweet changes it update it in UI
-  /// No matter if Tweet is in home page or in detail page or in comment section.
-  _onTweetChanged(DatabaseEvent event) {
+  /// Trigger when any echoo changes or update
+  /// When any echoo changes it update it in UI
+  /// No matter if Echoo is in home page or in detail page or in comment section.
+  _onEchooChanged(DatabaseEvent event) {
     var model =
         FeedModel.fromJson(event.snapshot.value as Map<dynamic, dynamic>);
     model.key = event.snapshot.key!;
@@ -502,18 +503,18 @@ class FeedState extends AppState {
       _feedList![_feedList!.indexOf(oldEntry)] = model;
     }
 
-    if (_tweetDetailModelList != null && _tweetDetailModelList!.isNotEmpty) {
-      if (_tweetDetailModelList!.any((x) => x.key == model.key)) {
-        var oldEntry = _tweetDetailModelList!.lastWhere((entry) {
+    if (_echooDetailModelList != null && _echooDetailModelList!.isNotEmpty) {
+      if (_echooDetailModelList!.any((x) => x.key == model.key)) {
+        var oldEntry = _echooDetailModelList!.lastWhere((entry) {
           return entry.key == event.snapshot.key;
         });
-        _tweetDetailModelList![_tweetDetailModelList!.indexOf(oldEntry)] =
+        _echooDetailModelList![_echooDetailModelList!.indexOf(oldEntry)] =
             model;
       }
-      if (tweetReplyMap != null && tweetReplyMap!.isNotEmpty) {
+      if (echooReplyMap != null && echooReplyMap!.isNotEmpty) {
         if (true) {
-          var list = tweetReplyMap![model.parentkey];
-          //  var list = tweetReplyMap.values.firstWhere((x) => x.any((y) => y.key == model.key));
+          var list = echooReplyMap![model.parentkey];
+          //  var list = echooReplyMap.values.firstWhere((x) => x.any((y) => y.key == model.key));
           if (list != null && list.isNotEmpty) {
             var index =
                 list.indexOf(list.firstWhere((x) => x.key == model.key));
@@ -526,47 +527,47 @@ class FeedState extends AppState {
       }
     }
     // if (event.snapshot != null) {
-    cprint('Tweet updated');
+    cprint('Echoo updated');
     isBusy = false;
     notifyListeners();
     // }
   }
 
-  /// Trigger when new tweet added
-  /// It will add new Tweet in home page list.
-  /// IF Tweet is comment it will be added in comment section too.
-  _onTweetAdded(DatabaseEvent event) {
-    FeedModel tweet = FeedModel.fromJson(event.snapshot.value as Map);
-    tweet.key = event.snapshot.key!;
+  /// Trigger when new echoo added
+  /// It will add new Echoo in home page list.
+  /// IF Echoo is comment it will be added in comment section too.
+  _onEchooAdded(DatabaseEvent event) {
+    FeedModel echoo = FeedModel.fromJson(event.snapshot.value as Map);
+    echoo.key = event.snapshot.key!;
 
-    /// Check if Tweet is a comment
-    _onCommentAdded(tweet);
-    tweet.key = event.snapshot.key!;
+    /// Check if Echoo is a comment
+    _onCommentAdded(echoo);
+    echoo.key = event.snapshot.key!;
     _feedList ??= <FeedModel>[];
-    if ((_feedList!.isEmpty || _feedList!.any((x) => x.key != tweet.key)) &&
-        tweet.isValidTweet) {
-      _feedList!.add(tweet);
-      cprint('Tweet Added');
+    if ((_feedList!.isEmpty || _feedList!.any((x) => x.key != echoo.key)) &&
+        echoo.isValidEchoo) {
+      _feedList!.add(echoo);
+      cprint('Echoo Added');
     }
     isBusy = false;
     notifyListeners();
   }
 
-  /// Trigger when comment tweet added
-  /// Check if Tweet is a comment
-  /// If Yes it will add tweet in comment list.
-  /// add [new tweet] comment to comment list
-  _onCommentAdded(FeedModel tweet) {
-    if (tweet.childRetwetkey != null) {
-      /// if Tweet is a type of retweet then it can not be a comment.
+  /// Trigger when comment echoo added
+  /// Check if Echoo is a comment
+  /// If Yes it will add echoo in comment list.
+  /// add [new echoo] comment to comment list
+  _onCommentAdded(FeedModel echoo) {
+    if (echoo.childRetwetkey != null) {
+      /// if Echoo is a type of reechoo then it can not be a comment.
       return;
     }
-    if (tweetReplyMap != null && tweetReplyMap!.isNotEmpty) {
-      if (tweetReplyMap![tweet.parentkey] != null) {
+    if (echooReplyMap != null && echooReplyMap!.isNotEmpty) {
+      if (echooReplyMap![echoo.parentkey] != null) {
         /// Insert new comment at the top of all available comment
-        tweetReplyMap![tweet.parentkey]!.insert(0, tweet);
+        echooReplyMap![echoo.parentkey]!.insert(0, echoo);
       } else {
-        tweetReplyMap![tweet.parentkey!] = [tweet];
+        echooReplyMap![echoo.parentkey!] = [echoo];
       }
       cprint('Comment Added');
     }
@@ -574,97 +575,97 @@ class FeedState extends AppState {
     notifyListeners();
   }
 
-  /// Trigger when Tweet `Deleted`
-  /// It removed Tweet from home page list, Tweet detail page list and from comment section if present
-  _onTweetRemoved(DatabaseEvent event) async {
-    FeedModel tweet = FeedModel.fromJson(event.snapshot.value as Map);
-    tweet.key = event.snapshot.key!;
-    var tweetId = tweet.key;
-    var parentkey = tweet.parentkey;
+  /// Trigger when Echoo `Deleted`
+  /// It removed Echoo from home page list, Echoo detail page list and from comment section if present
+  _onEchooRemoved(DatabaseEvent event) async {
+    FeedModel echoo = FeedModel.fromJson(event.snapshot.value as Map);
+    echoo.key = event.snapshot.key!;
+    var echooId = echoo.key;
+    var parentkey = echoo.parentkey;
 
-    ///  Delete tweet in [Home Page]
+    ///  Delete echoo in [Home Page]
     try {
-      late FeedModel deletedTweet;
-      if (_feedList!.any((x) => x.key == tweetId)) {
-        /// Delete tweet if it is in home page tweet.
-        deletedTweet = _feedList!.firstWhere((x) => x.key == tweetId);
-        _feedList!.remove(deletedTweet);
+      late FeedModel deletedEchoo;
+      if (_feedList!.any((x) => x.key == echooId)) {
+        /// Delete echoo if it is in home page echoo.
+        deletedEchoo = _feedList!.firstWhere((x) => x.key == echooId);
+        _feedList!.remove(deletedEchoo);
 
-        if (deletedTweet.parentkey != null &&
+        if (deletedEchoo.parentkey != null &&
             _feedList!.isNotEmpty &&
-            _feedList!.any((x) => x.key == deletedTweet.parentkey)) {
-          // Decrease parent Tweet comment count and update
+            _feedList!.any((x) => x.key == deletedEchoo.parentkey)) {
+          // Decrease parent Echoo comment count and update
           var parentModel =
-              _feedList!.firstWhere((x) => x.key == deletedTweet.parentkey);
-          parentModel.replyTweetKeyList!.remove(deletedTweet.key);
-          parentModel.commentCount = parentModel.replyTweetKeyList!.length;
-          updateTweet(parentModel);
+              _feedList!.firstWhere((x) => x.key == deletedEchoo.parentkey);
+          parentModel.replyEchooKeyList!.remove(deletedEchoo.key);
+          parentModel.commentCount = parentModel.replyEchooKeyList!.length;
+          updateEchoo(parentModel);
         }
         if (_feedList!.isEmpty) {
           _feedList = null;
         }
-        cprint('Tweet deleted from home page tweet list');
+        cprint('Echoo deleted from home page echoo list');
       }
 
-      /// [Delete tweet] if it is in nested tweet detail comment section page
+      /// [Delete echoo] if it is in nested echoo detail comment section page
       if (parentkey != null &&
           parentkey.isNotEmpty &&
-          tweetReplyMap != null &&
-          tweetReplyMap!.isNotEmpty &&
-          tweetReplyMap!.keys.any((x) => x == parentkey)) {
-        // (type == TweetType.Reply || tweetReplyMap.length > 1) &&
-        deletedTweet =
-            tweetReplyMap![parentkey]!.firstWhere((x) => x.key == tweetId);
-        tweetReplyMap![parentkey]!.remove(deletedTweet);
-        if (tweetReplyMap![parentkey]!.isEmpty) {
-          tweetReplyMap![parentkey] = null;
+          echooReplyMap != null &&
+          echooReplyMap!.isNotEmpty &&
+          echooReplyMap!.keys.any((x) => x == parentkey)) {
+        // (type == EchooType.Reply || echooReplyMap.length > 1) &&
+        deletedEchoo =
+            echooReplyMap![parentkey]!.firstWhere((x) => x.key == echooId);
+        echooReplyMap![parentkey]!.remove(deletedEchoo);
+        if (echooReplyMap![parentkey]!.isEmpty) {
+          echooReplyMap![parentkey] = null;
         }
 
-        if (_tweetDetailModelList != null &&
-            _tweetDetailModelList!.isNotEmpty &&
-            _tweetDetailModelList!.any((x) => x.key == parentkey)) {
+        if (_echooDetailModelList != null &&
+            _echooDetailModelList!.isNotEmpty &&
+            _echooDetailModelList!.any((x) => x.key == parentkey)) {
           var parentModel =
-              _tweetDetailModelList!.firstWhere((x) => x.key == parentkey);
-          parentModel.replyTweetKeyList!.remove(deletedTweet.key);
-          parentModel.commentCount = parentModel.replyTweetKeyList!.length;
-          cprint('Parent tweet comment count updated on child tweet removal');
-          updateTweet(parentModel);
+              _echooDetailModelList!.firstWhere((x) => x.key == parentkey);
+          parentModel.replyEchooKeyList!.remove(deletedEchoo.key);
+          parentModel.commentCount = parentModel.replyEchooKeyList!.length;
+          cprint('Parent echoo comment count updated on child echoo removal');
+          updateEchoo(parentModel);
         }
 
-        cprint('Tweet deleted from nested tweet detail comment section');
+        cprint('Echoo deleted from nested echoo detail comment section');
       }
 
-      /// Delete tweet image from firebase storage if exist.
-      if (deletedTweet.imagePath != null &&
-          deletedTweet.imagePath!.isNotEmpty) {
-        deleteFile(deletedTweet.imagePath!, 'tweetImage');
+      /// Delete echoo image from firebase storage if exist.
+      if (deletedEchoo.imagePath != null &&
+          deletedEchoo.imagePath!.isNotEmpty) {
+        deleteFile(deletedEchoo.imagePath!, 'echooImage');
       }
 
-      /// If a retweet is deleted then retweetCount of original tweet should be decrease by 1.
-      if (deletedTweet.childRetwetkey != null) {
-        await fetchTweet(deletedTweet.childRetwetkey!)
-            .then((FeedModel? retweetModel) {
-          if (retweetModel == null) {
+      /// If a reechoo is deleted then reechooCount of original echoo should be decrease by 1.
+      if (deletedEchoo.childRetwetkey != null) {
+        await fetchEchoo(deletedEchoo.childRetwetkey!)
+            .then((FeedModel? reechooModel) {
+          if (reechooModel == null) {
             return;
           }
-          if (retweetModel.retweetCount! > 0) {
-            retweetModel.retweetCount = retweetModel.retweetCount! - 1;
+          if (reechooModel.reechooCount! > 0) {
+            reechooModel.reechooCount = reechooModel.reechooCount! - 1;
           }
-          updateTweet(retweetModel);
+          updateEchoo(reechooModel);
         });
       }
 
-      /// Delete notification related to deleted Tweet.
-      if (deletedTweet.likeCount! > 0) {
+      /// Delete notification related to deleted Echoo.
+      if (deletedEchoo.likeCount! > 0) {
         kDatabase
             .child('notification')
-            .child(tweet.userId)
-            .child(tweet.key!)
+            .child(echoo.userId)
+            .child(echoo.key!)
             .remove();
       }
       notifyListeners();
     } catch (error) {
-      cprint(error, errorIn: '_onTweetRemoved');
+      cprint(error, errorIn: '_onEchooRemoved');
     }
   }
 }

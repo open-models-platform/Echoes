@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/firebase_database.dart' as dabase;
 import 'package:flutter/foundation.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
 
 class ProfileState extends ChangeNotifier {
   ProfileState(this.profileId) {
@@ -145,7 +145,7 @@ class ProfileState extends ChangeNotifier {
   }
 
   void addFollowNotification() {
-    // Sends notification to user who created tweet
+    // Sends notification to user who created echoo
     // UserModel owner can see notification on notification page
     kDatabase.child('notification').child(profileId).child(userId).set({
       'type': NotificationType.Follow.toString(),

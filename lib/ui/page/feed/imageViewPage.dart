@@ -1,13 +1,13 @@
+import 'package:Echoes/helper/constant.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/cache_image.dart';
+import 'package:Echoes/widgets/echoo/widgets/echooIconsRow.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/constant.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/cache_image.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/widgets/tweetIconsRow.dart';
 import 'package:provider/provider.dart';
 
 class ImageViewPge extends StatefulWidget {
@@ -46,7 +46,7 @@ class _ImageViewPgeState extends State<ImageViewPge> {
                   isToolAvailable = !isToolAvailable;
                 });
               },
-              child: _imageFeed(state.tweetDetailModel!.last.imagePath),
+              child: _imageFeed(state.echooDetailModel!.last.imagePath),
             ),
           ),
         ),
@@ -78,8 +78,8 @@ class _ImageViewPgeState extends State<ImageViewPge> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    TweetIconsRow(
-                      model: state.tweetDetailModel!.last,
+                    EchooIconsRow(
+                      model: state.echooDetailModel!.last,
                       iconColor: Theme.of(context).colorScheme.onPrimary,
                       iconEnableColor: Theme.of(context).colorScheme.onPrimary,
                       scaffoldKey: GlobalKey<ScaffoldState>(),
@@ -173,7 +173,7 @@ class _ImageViewPgeState extends State<ImageViewPge> {
         profilePic: pic,
         userId: authState.userId);
 
-    var postId = state.tweetDetailModel!.last.key;
+    var postId = state.echooDetailModel!.last.key;
 
     FeedModel reply = FeedModel(
       description: _textEditingController.text,

@@ -1,54 +1,54 @@
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/ui/page/feed/feedPostDetail.dart';
+import 'package:Echoes/ui/page/profile/profilePage.dart';
+import 'package:Echoes/ui/page/profile/widgets/circular_image.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/echoo/widgets/echooIconsRow.dart';
+import 'package:Echoes/widgets/echoo/widgets/parentEchoo.dart';
+import 'package:Echoes/widgets/newWidget/title_text.dart';
+import 'package:Echoes/widgets/url_text/customUrlText.dart';
+import 'package:Echoes/widgets/url_text/custom_link_media_info.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/ui/page/feed/feedPostDetail.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/profilePage.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/widgets/circular_image.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/title_text.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/widgets/parentTweet.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/widgets/tweetIconsRow.dart';
-import 'package:flutter_twitter_clone/widgets/url_text/customUrlText.dart';
-import 'package:flutter_twitter_clone/widgets/url_text/custom_link_media_info.dart';
 import 'package:provider/provider.dart';
 
 import '../customWidgets.dart';
-import 'widgets/retweetWidget.dart';
-import 'widgets/tweetImage.dart';
+import 'widgets/echooImage.dart';
+import 'widgets/reechooWidget.dart';
 
-class Tweet extends StatelessWidget {
+class Echoo extends StatelessWidget {
   final FeedModel model;
   final Widget? trailing;
-  final TweetType type;
+  final EchooType type;
   final bool isDisplayOnProfile;
   final GlobalKey<ScaffoldState> scaffoldKey;
-  const Tweet({
+  const Echoo({
     Key? key,
     required this.model,
     this.trailing,
-    this.type = TweetType.Tweet,
+    this.type = EchooType.Echoo,
     this.isDisplayOnProfile = false,
     required this.scaffoldKey,
   }) : super(key: key);
 
-  void onLongPressedTweet(BuildContext context) {
-    if (type == TweetType.Detail || type == TweetType.ParentTweet) {
+  void onLongPressedEchoo(BuildContext context) {
+    if (type == EchooType.Detail || type == EchooType.ParentEchoo) {
       Utility.copyToClipBoard(
           context: context,
           text: model.description ?? "",
-          message: "Tweet copy to clipboard");
+          message: "Echoo copy to clipboard");
     }
   }
 
-  void onTapTweet(BuildContext context) {
+  void onTapEchoo(BuildContext context) {
     var feedState = Provider.of<FeedState>(context, listen: false);
-    if (type == TweetType.Detail || type == TweetType.ParentTweet) {
+    if (type == EchooType.Detail || type == EchooType.ParentEchoo) {
       return;
     }
-    if (type == TweetType.Tweet && !isDisplayOnProfile) {
-      feedState.clearAllDetailAndReplyTweetStack();
+    if (type == EchooType.Echoo && !isDisplayOnProfile) {
+      feedState.clearAllDetailAndReplyEchooStack();
     }
     feedState.getPostDetailFromDatabase(null, model: model);
     Navigator.push(context, FeedPostDetail.getRoute(model.key!));
@@ -59,8 +59,8 @@ class Tweet extends StatelessWidget {
     return Stack(
       alignment: Alignment.topLeft,
       children: <Widget>[
-        /// Left vertical bar of a tweet
-        type != TweetType.ParentTweet
+        /// Left vertical bar of a echoo
+        type != EchooType.ParentEchoo
             ? const SizedBox.shrink()
             : Positioned.fill(
                 child: Container(
@@ -77,28 +77,28 @@ class Tweet extends StatelessWidget {
               ),
         InkWell(
           onLongPress: () {
-            onLongPressedTweet(context);
+            onLongPressedEchoo(context);
           },
           onTap: () {
-            onTapTweet(context);
+            onTapEchoo(context);
           },
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(
-                  top: type == TweetType.Tweet || type == TweetType.Reply
+                  top: type == EchooType.Echoo || type == EchooType.Reply
                       ? 12
                       : 0,
                 ),
-                child: type == TweetType.Tweet || type == TweetType.Reply
-                    ? _TweetBody(
+                child: type == EchooType.Echoo || type == EchooType.Reply
+                    ? _EchooBody(
                         isDisplayOnProfile: isDisplayOnProfile,
                         model: model,
                         trailing: trailing,
                         type: type,
                       )
-                    : _TweetDetailBody(
+                    : _EchooDetailBody(
                         // isDisplayOnProfile: isDisplayOnProfile,
                         model: model,
                         trailing: trailing,
@@ -107,14 +107,14 @@ class Tweet extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 16),
-                child: TweetImage(
+                child: EchooImage(
                   model: model,
                   type: type,
                 ),
               ),
               model.childRetwetkey == null
                   ? const SizedBox.shrink()
-                  : RetweetWidget(
+                  : ReechooWidget(
                       childRetwetkey: model.childRetwetkey!,
                       type: type,
                       isImageAvailable: model.imagePath != null &&
@@ -122,18 +122,18 @@ class Tweet extends StatelessWidget {
                     ),
               Padding(
                 padding:
-                    EdgeInsets.only(left: type == TweetType.Detail ? 10 : 60),
-                child: TweetIconsRow(
+                    EdgeInsets.only(left: type == EchooType.Detail ? 10 : 60),
+                child: EchooIconsRow(
                   type: type,
                   model: model,
-                  isTweetDetail: type == TweetType.Detail,
+                  isEchooDetail: type == EchooType.Detail,
                   iconColor: Theme.of(context).textTheme.caption!.color!,
                   iconEnableColor: TwitterColor.ceriseRed,
                   size: 20,
                   scaffoldKey: GlobalKey<ScaffoldState>(),
                 ),
               ),
-              type == TweetType.ParentTweet
+              type == EchooType.ParentEchoo
                   ? const SizedBox.shrink()
                   : const Divider(height: .5, thickness: .5)
             ],
@@ -144,12 +144,12 @@ class Tweet extends StatelessWidget {
   }
 }
 
-class _TweetBody extends StatelessWidget {
+class _EchooBody extends StatelessWidget {
   final FeedModel model;
   final Widget? trailing;
-  final TweetType type;
+  final EchooType type;
   final bool isDisplayOnProfile;
-  const _TweetBody(
+  const _EchooBody(
       {Key? key,
       required this.model,
       this.trailing,
@@ -159,13 +159,13 @@ class _TweetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double descriptionFontSize = type == TweetType.Tweet
+    double descriptionFontSize = type == EchooType.Echoo
         ? 15
-        : type == TweetType.Detail || type == TweetType.ParentTweet
+        : type == EchooType.Detail || type == EchooType.ParentEchoo
             ? 18
             : 14;
     FontWeight descriptionFontWeight =
-        type == TweetType.Tweet || type == TweetType.Tweet
+        type == EchooType.Echoo || type == EchooType.Echoo
             ? FontWeight.w400
             : FontWeight.w400;
     TextStyle textStyle = TextStyle(
@@ -185,7 +185,7 @@ class _TweetBody extends StatelessWidget {
           height: 40,
           child: GestureDetector(
             onTap: () {
-              // If tweet is displaying on someone's profile then no need to navigate to same user's profile again.
+              // If echoo is displaying on someone's profile then no need to navigate to same user's profile again.
               if (isDisplayOnProfile) {
                 return;
               }
@@ -262,9 +262,9 @@ class _TweetBody extends StatelessWidget {
                           style: textStyle,
                           urlStyle: urlStyle,
                         ),
-                        // TweetTranslation(
+                        // EchooTranslation(
                         //   languageCode: model.lanCode,
-                        //   tweetKey: model.key!,
+                        //   echooKey: model.key!,
                         //   description: model.description!,
                         //   textStyle: textStyle,
                         //   urlStyle: urlStyle,
@@ -282,12 +282,12 @@ class _TweetBody extends StatelessWidget {
   }
 }
 
-class _TweetDetailBody extends StatelessWidget {
+class _EchooDetailBody extends StatelessWidget {
   final FeedModel model;
   final Widget? trailing;
-  final TweetType type;
+  final EchooType type;
   // final bool isDisplayOnProfile;
-  const _TweetDetailBody({
+  const _EchooDetailBody({
     Key? key,
     required this.model,
     this.trailing,
@@ -297,16 +297,16 @@ class _TweetDetailBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double descriptionFontSize = type == TweetType.Tweet
+    double descriptionFontSize = type == EchooType.Echoo
         ? context.getDimension(context, 15)
-        : type == TweetType.Detail
+        : type == EchooType.Detail
             ? context.getDimension(context, 18)
-            : type == TweetType.ParentTweet
+            : type == EchooType.ParentEchoo
                 ? context.getDimension(context, 14)
                 : 10;
 
     FontWeight descriptionFontWeight =
-        type == TweetType.Tweet || type == TweetType.Tweet
+        type == EchooType.Echoo || type == EchooType.Echoo
             ? FontWeight.w300
             : FontWeight.w400;
     TextStyle textStyle = TextStyle(
@@ -322,8 +322,8 @@ class _TweetDetailBody extends StatelessWidget {
       children: <Widget>[
         model.parentkey != null &&
                 model.childRetwetkey == null &&
-                type != TweetType.ParentTweet
-            ? ParentTweetWidget(
+                type != EchooType.ParentEchoo
+            ? ParentEchooWidget(
                 childRetwetkey: model.parentkey!,
                 // isImageAvailable: false,
                 trailing: trailing,
@@ -377,7 +377,7 @@ class _TweetDetailBody extends StatelessWidget {
               model.description == null
                   ? const SizedBox()
                   : Padding(
-                      padding: type == TweetType.ParentTweet
+                      padding: type == EchooType.ParentEchoo
                           ? const EdgeInsets.only(left: 80, right: 16)
                           : const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
@@ -390,9 +390,9 @@ class _TweetDetailBody extends StatelessWidget {
                               },
                               style: textStyle,
                               urlStyle: urlStyle),
-                          // TweetTranslation(
+                          // EchooTranslation(
                           //   languageCode: model.lanCode,
-                          //   tweetKey: model.key!,
+                          //   echooKey: model.key!,
                           //   description: model.description!,
                           //   textStyle: textStyle,
                           //   urlStyle: urlStyle,

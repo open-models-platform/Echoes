@@ -1,10 +1,10 @@
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/ui/page/settings/widgets/headerWidget.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsAppbar.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsRowWidget.dart';
+import 'package:Echoes/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/headerWidget.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsAppbar.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsRowWidget.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class NotificationPage extends StatelessWidget {
@@ -40,13 +40,13 @@ class NotificationPage extends StatelessWidget {
             "Unread notification count badge",
             showCheckBox: false,
             subtitle:
-                'Display a badge with the number of notifications waiting for you inside the Fwitter app.',
+                'Display a badge with the number of notifications waiting for you inside the Echooes app.',
           ),
           SettingRowWidget("Push notifications"),
           SettingRowWidget("SMS notifications"),
           SettingRowWidget(
             "Email notifications",
-            subtitle: 'Control when how often Fwitter sends emails to you.',
+            subtitle: 'Control when how often Echooes sends emails to you.',
           ),
         ],
       ),

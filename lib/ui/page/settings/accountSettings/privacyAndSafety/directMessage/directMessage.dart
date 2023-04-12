@@ -1,10 +1,10 @@
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/ui/page/settings/widgets/headerWidget.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsAppbar.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsRowWidget.dart';
+import 'package:Echoes/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/headerWidget.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsAppbar.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsRowWidget.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class DirectMessagesPage extends StatelessWidget {
@@ -33,7 +33,7 @@ class DirectMessagesPage extends StatelessWidget {
             visibleSwitch: true,
             vPadding: 20,
             subtitle:
-                'You will be able to receive Direct Message requests from anyone on Fwitter, even if you don\'t follow them.',
+                'You will be able to receive Direct Message requests from anyone on Echooes, even if you don\'t follow them.',
           ),
           SettingRowWidget(
             "Show read receipts",

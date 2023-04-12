@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
+
+import 'package:Echoes/ui/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

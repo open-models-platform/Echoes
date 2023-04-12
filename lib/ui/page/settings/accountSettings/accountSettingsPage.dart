@@ -1,10 +1,10 @@
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/ui/page/settings/widgets/headerWidget.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsAppbar.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsRowWidget.dart';
+import 'package:Echoes/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/headerWidget.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsAppbar.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsRowWidget.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class AccountSettingsPage extends StatelessWidget {
@@ -44,7 +44,7 @@ class AccountSettingsPage extends StatelessWidget {
             secondHeader: true,
           ),
           const SettingRowWidget("Country"),
-          const SettingRowWidget("Your Fwitter data"),
+          const SettingRowWidget("Your Echooes data"),
           const SettingRowWidget("Apps and sessions"),
           SettingRowWidget(
             "Log out",

@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ComposeBottomIconWidget extends StatefulWidget {
@@ -23,7 +23,7 @@ class _ComposeBottomIconWidgetState extends State<ComposeBottomIconWidget> {
   bool reachToWarning = false;
   bool reachToOver = false;
   late Color wordCountColor;
-  String tweet = '';
+  String echoo = '';
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _ComposeBottomIconWidgetState extends State<ComposeBottomIconWidget> {
 
   void updateUI() {
     setState(() {
-      tweet = widget.textEditingController.text;
+      echoo = widget.textEditingController.text;
       if (widget.textEditingController.text.isNotEmpty) {
         if (widget.textEditingController.text.length > 259 &&
             widget.textEditingController.text.length < 280) {
@@ -80,10 +80,10 @@ class _ComposeBottomIconWidgetState extends State<ComposeBottomIconWidget> {
             child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                child: /*tweet != null &&*/ tweet.length > 289
+                child: /*echoo != null &&*/ echoo.length > 289
                     ? Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: customText('${280 - tweet.length}',
+                        child: customText('${280 - echoo.length}',
                             style:
                                 TextStyle(color: Theme.of(context).errorColor)),
                       )
@@ -91,13 +91,13 @@ class _ComposeBottomIconWidgetState extends State<ComposeBottomIconWidget> {
                         alignment: Alignment.center,
                         children: <Widget>[
                           CircularProgressIndicator(
-                            value: getTweetLimit(),
+                            value: getEchooLimit(),
                             backgroundColor: Colors.grey,
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(wordCountColor),
                           ),
-                          tweet.length > 259
-                              ? customText('${280 - tweet.length}',
+                          echoo.length > 259
+                              ? customText('${280 - echoo.length}',
                                   style: TextStyle(color: wordCountColor))
                               : customText('',
                                   style: TextStyle(color: wordCountColor))
@@ -120,14 +120,14 @@ class _ComposeBottomIconWidgetState extends State<ComposeBottomIconWidget> {
     });
   }
 
-  double getTweetLimit() {
-    if (/*tweet == null || */ tweet.isEmpty) {
+  double getEchooLimit() {
+    if (/*echoo == null || */ echoo.isEmpty) {
       return 0.0;
     }
-    if (tweet.length > 280) {
+    if (echoo.length > 280) {
       return 1.0;
     }
-    var length = tweet.length;
+    var length = echoo.length;
     var val = length * 100 / 28000.0;
     return val;
   }

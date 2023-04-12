@@ -1,9 +1,9 @@
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/helper/shared_prefrence_helper.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/state/appState.dart';
-import 'package:flutter_twitter_clone/ui/page/common/locator.dart';
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/shared_prefrence_helper.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/appState.dart';
+import 'package:Echoes/ui/page/common/locator.dart';
 
 enum StateType { following, follower }
 
@@ -90,7 +90,7 @@ class FollowListState extends AppState {
   }
 
   void addFollowNotification(String profileId) {
-    // Sends notification to user who created tweet
+    // Sends notification to user who created echoo
     // UserModel owner can see notification on notification page
     kDatabase
         .child('notification')

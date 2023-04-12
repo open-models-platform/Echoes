@@ -1,6 +1,6 @@
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/url_text/customUrlText.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/url_text/customUrlText.dart';
 
 class HeaderWidget extends StatelessWidget {
   final String? title;

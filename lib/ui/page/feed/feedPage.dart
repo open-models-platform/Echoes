@@ -1,14 +1,14 @@
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/state/feedState.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/echoo/echoo.dart';
+import 'package:Echoes/widgets/echoo/widgets/echooBottomSheet.dart';
+import 'package:Echoes/widgets/newWidget/customLoader.dart';
+import 'package:Echoes/widgets/newWidget/emptyList.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/state/feedState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/customLoader.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/emptyList.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/tweet.dart';
-import 'package:flutter_twitter_clone/widgets/tweet/widgets/tweetBottomSheet.dart';
 import 'package:provider/provider.dart';
 
 class FeedPage extends StatelessWidget {
@@ -23,11 +23,11 @@ class FeedPage extends StatelessWidget {
   Widget _floatingActionButton(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        Navigator.of(context).pushNamed('/CreateFeedPage/tweet');
+        Navigator.of(context).pushNamed('/CreateFeedPage/echoo');
       },
       child: customIcon(
         context,
-        icon: AppIcon.fabTweet,
+        icon: AppIcon.fabEchoo,
         isTwitterIcon: true,
         iconColor: Theme.of(context).colorScheme.onPrimary,
         size: 25,
@@ -77,7 +77,7 @@ class _FeedPageBody extends StatelessWidget {
     var authState = Provider.of<AuthState>(context, listen: false);
     return Consumer<FeedState>(
       builder: (context, state, child) {
-        final List<FeedModel>? list = state.getTweetList(authState.userModel);
+        final List<FeedModel>? list = state.getEchooList(authState.userModel);
         return CustomScrollView(
           slivers: <Widget>[
             child!,
@@ -95,9 +95,9 @@ class _FeedPageBody extends StatelessWidget {
                 : !state.isBusy && list == null
                     ? const SliverToBoxAdapter(
                         child: EmptyList(
-                          'No Tweet added yet',
+                          'No Echoo added yet',
                           subTitle:
-                              'When new Tweet added, they\'ll show up here \n Tap tweet button to add new',
+                              'When new Echoo added, they\'ll show up here \n Tap echoo button to add new',
                         ),
                       )
                     : SliverList(
@@ -106,12 +106,12 @@ class _FeedPageBody extends StatelessWidget {
                             (model) {
                               return Container(
                                 color: Colors.white,
-                                child: Tweet(
+                                child: Echoo(
                                   model: model,
-                                  trailing: TweetBottomSheet().tweetOptionIcon(
+                                  trailing: EchooBottomSheet().echooOptionIcon(
                                       context,
                                       model: model,
-                                      type: TweetType.Tweet,
+                                      type: EchooType.Echoo,
                                       scaffoldKey: scaffoldKey),
                                   scaffoldKey: scaffoldKey,
                                 ),

@@ -1,9 +1,9 @@
+import 'package:Echoes/helper/customRoute.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/ui/page/profile/profilePage.dart';
+import 'package:Echoes/ui/page/profile/widgets/circular_image.dart';
+import 'package:Echoes/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/customRoute.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/profilePage.dart';
-import 'package:flutter_twitter_clone/ui/page/profile/widgets/circular_image.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
 
 class ProfileImageView extends StatelessWidget {
   const ProfileImageView({Key? key, required this.avatar}) : super(key: key);

@@ -1,6 +1,6 @@
+import 'package:Echoes/helper/utility.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
 
 class UrlText extends StatelessWidget {
   final String text;

@@ -1,10 +1,10 @@
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/ui/page/settings/widgets/headerWidget.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsAppbar.dart';
+import 'package:Echoes/ui/page/settings/widgets/settingsRowWidget.dart';
+import 'package:Echoes/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/headerWidget.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsAppbar.dart';
-import 'package:flutter_twitter_clone/ui/page/settings/widgets/settingsRowWidget.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class PrivacyAndSaftyPage extends StatelessWidget {
@@ -22,11 +22,11 @@ class PrivacyAndSaftyPage extends StatelessWidget {
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: const <Widget>[
-          HeaderWidget('Tweets'),
+          HeaderWidget('Echoos'),
           SettingRowWidget(
-            "Protect your tweet",
+            "Protect your echoo",
             subtitle:
-                'Only current followers and people you approve in future will be able to see your tweets.',
+                'Only current followers and people you approve in future will be able to see your echoos.',
             vPadding: 15,
             showDivider: false,
             visibleSwitch: true,
@@ -82,7 +82,7 @@ class PrivacyAndSaftyPage extends StatelessWidget {
             visibleSwitch: true,
           ),
           SettingRowWidget(
-            "Mark media you tweet as containing material thta may be sensitive",
+            "Mark media you echoo as containing material thta may be sensitive",
             vPadding: 15,
             showDivider: false,
             visibleSwitch: true,
@@ -106,7 +106,7 @@ class PrivacyAndSaftyPage extends StatelessWidget {
           SettingRowWidget(
             "Precise location",
             subtitle:
-                'Disabled \n\n\nIf enabled, Fwitter will collect, store, and use your device\'s precise location, such as your GPS information. This lets Fwitter improve your experience - for example, showing you mpre local content, ads, and recommendations.',
+                'Disabled \n\n\nIf enabled, Echooes will collect, store, and use your device\'s precise location, such as your GPS information. This lets Echooes improve your experience - for example, showing you mpre local content, ads, and recommendations.',
           ),
           HeaderWidget(
             'Personalisation and data',
@@ -117,7 +117,7 @@ class PrivacyAndSaftyPage extends StatelessWidget {
             subtitle: "Allow all",
           ),
           SettingRowWidget(
-            "See your Fwitter data",
+            "See your Echooes data",
             subtitle:
                 "Review and edit your profile information and data associated with your account.",
           ),

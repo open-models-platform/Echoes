@@ -1,6 +1,6 @@
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
 
 class SettingsAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SettingsAppBar({Key? key, required this.title, this.subtitle})

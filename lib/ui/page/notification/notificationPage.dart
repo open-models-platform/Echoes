@@ -1,15 +1,15 @@
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/model/feedModel.dart';
+import 'package:Echoes/model/notificationModel.dart';
+import 'package:Echoes/state/authState.dart';
+import 'package:Echoes/state/notificationState.dart';
+import 'package:Echoes/ui/page/notification/widget/follow_notification_tile.dart';
+import 'package:Echoes/ui/page/notification/widget/post_like_tile.dart';
+import 'package:Echoes/ui/theme/theme.dart';
+import 'package:Echoes/widgets/customAppBar.dart';
+import 'package:Echoes/widgets/customWidgets.dart';
+import 'package:Echoes/widgets/newWidget/emptyList.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:flutter_twitter_clone/model/feedModel.dart';
-import 'package:flutter_twitter_clone/model/notificationModel.dart';
-import 'package:flutter_twitter_clone/state/authState.dart';
-import 'package:flutter_twitter_clone/state/notificationState.dart';
-import 'package:flutter_twitter_clone/ui/page/notification/widget/follow_notification_tile.dart';
-import 'package:flutter_twitter_clone/ui/page/notification/widget/post_like_tile.dart';
-import 'package:flutter_twitter_clone/ui/theme/theme.dart';
-import 'package:flutter_twitter_clone/widgets/customAppBar.dart';
-import 'package:flutter_twitter_clone/widgets/customWidgets.dart';
-import 'package:flutter_twitter_clone/widgets/newWidget/emptyList.dart';
 import 'package:provider/provider.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -66,7 +66,7 @@ class NotificationPageBody extends StatelessWidget {
       );
     }
     return FutureBuilder(
-      future: state.getTweetDetail(model.tweetKey!),
+      future: state.getEchooDetail(model.echooKey!),
       builder: (BuildContext context, AsyncSnapshot<FeedModel?> snapshot) {
         if (snapshot.hasData) {
           return PostLikeTile(model: snapshot.data!);
@@ -77,9 +77,9 @@ class NotificationPageBody extends StatelessWidget {
             child: LinearProgressIndicator(),
           );
         } else {
-          /// remove notification from firebase db if tweet in not available or deleted.
+          /// remove notification from firebase db if echoo in not available or deleted.
           var authState = Provider.of<AuthState>(context);
-          state.removeNotification(authState.userId, model.tweetKey!);
+          state.removeNotification(authState.userId, model.echooKey!);
           return const SizedBox();
         }
       },

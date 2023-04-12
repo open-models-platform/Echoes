@@ -1,13 +1,14 @@
 import 'dart:convert';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:flutter_twitter_clone/helper/enum.dart';
-import 'package:http/http.dart' as http;
+
+import 'package:Echoes/helper/enum.dart';
+import 'package:Echoes/helper/utility.dart';
+import 'package:Echoes/model/chatModel.dart';
+import 'package:Echoes/model/user.dart';
+import 'package:Echoes/state/appState.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_twitter_clone/model/chatModel.dart';
-import 'package:flutter_twitter_clone/helper/utility.dart';
-import 'package:flutter_twitter_clone/model/user.dart';
-import 'package:flutter_twitter_clone/state/appState.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:http/http.dart' as http;
 
 class ChatState extends AppState {
   late bool setIsChatScreenOpen; //!obsolete
@@ -79,7 +80,7 @@ class ChatState extends AppState {
   ///  {
   ///    "key": "FCM server key here"
   ///  } ```
-  /// For more detail visit:- https://github.com/TheAlphamerc/flutter_twitter_clone/issues/28#issue-611695533
+  /// For more detail visit:- https://github.com/open-models-platform/Echoes/issues/28#issue-611695533
   /// For package detail check:-  https://pub.dev/packages/firebase_remote_config#-readme-tab-
   void getFCMServerKey() async {
     final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
